@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Avents</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='CSS/estilos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='CSS/estilocrear.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='CSS/estilonavbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='CSS/estilofooter.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='CSS/estiloevent.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='CSS/estilosmiseve.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='CSS/estiloregistro.css') }}">
+
+
+</head>
+
+
+<!--------------------------------------NAVBAR------------------------------------------------------------>
+
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color: rgba(185,35,245)";  role="navigation">
+    <a class="navbar-brand" href="{{ url_for('index') }}"><img
+            src="{{ url_for('static',filename='Imagenes/vengadores.png') }}" class="logo" alt="logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span> <img src="{{ url_for('static',filename='Imagenes/barramenu.png') }}" alt="barramenu"
+                    class="barramenu"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            {% if user=='log' %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('create_event') }}">Crear Evento</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('my_event') }}">Mis Eventos</a>
+                </li>
+            {% endif %}
+        </ul>
+
+
+        {% if user=='nolog' %}
+
+            <a href="{{ url_for('register') }}" class="btn boton-regis" role="button"
+               aria-pressed="true">Registrarse</a>
+
+            <a href="{{ url_for('login') }}" class="btn boton-regis" role="button" aria-pressed="true">Iniciar
+                Sesión</a>
+
+
+        {% elif user=='log' %}
+            <li>
+                <img src="{{ url_for('static',filename='Imagenes/boy.png') }}" alt="users" class="img-user">
+            </li>
+            <li class="nomb-user"><h6>Nombre de Usuario</h6></li>
+
+        {% elif user=='admin' %}
+            <li>
+                <img src="{{ url_for('static',filename='Imagenes/boss.png') }}" alt="users" class="img-user">
+            </li>
+            <li class="nomb-user"><h6>Administrador</h6></li>
+
+        {% endif %}
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</div>
+
+{% block contenido %}
+
+{% endblock %}
+
+
+<!---------------------------------------------FOOTER----------------------------------------------------->
+<footer class="text-center footer-style">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-md-4  col-sm-4 footer-col">
+                <h3>Quienes somos?</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dolores deserunt nulla, beatae esse
+                    nihil impedit quis nesciunt ducimus odio sequi sed fuga totam voluptatum aspernatur dolor delectus
+                    numquam nam.</p>
+            </div>
+
+            <div class="col-lg-4 col-md-4  col-sm-4 footer-col">
+                <h3>Siguenos en</h3>
+                <ul class="list-inline">
+                    <li>
+                        <img src="{{ url_for('static',filename='Imagenes/facebook.png') }}" alt="facebook"
+                             class="imgfoo">Facebook
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static',filename='Imagenes/instagram.png') }}" alt="facebook"
+                             class="imgfoo">Instagram
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static',filename='Imagenes/twitter.png') }}" alt="facebook"
+                             class="imgfoo">Twitter
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-4  col-sm-4 footer-col">
+                <h3>Contactenos:</h3>
+                <li>
+                    <img src="{{ url_for('static',filename='Imagenes/supportpeque.png') }}" alt="support"
+                         class="imgfoo">0800-5658-7896
+                </li>
+
+                <li>
+                    <img src="{{ url_for('static',filename='Imagenes/email.png') }}" alt="mail" class="imgfoo">avents@gmail.com
+                </li>
+
+                <li>
+                    <img src="{{ url_for('static',filename='Imagenes/placeholder.png') }}" alt="lugar" class="imgfoo">261
+                    Reel Avenue
+                    Albuquerque, NM 87121
+                </li>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12  col-sm-12 columna">
+                <h6>Copyright © 2013-2019 Avents Company S.L. All rights reserved.</h6>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

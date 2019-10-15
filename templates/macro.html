@@ -1,0 +1,45 @@
+{% macro show_event(event) %}
+    <div class=" col-lg-4 col-md-6 col-sm-6">
+            <div class="card">
+                <img src="{{ url_for('static',filename='Imagenes/Event1.jpg') }}" class="card-img" alt="event">
+                <div class="card-body">
+                    <h5 class="card-title">{{ event["nombre"] }}</h5>
+                    <p class="card-text">{{ event["descripcion"] }} </p>
+                    <a href="{{ url_for('event',id=event['eventoId']) }}" class="btn btn-link link-card">Ver más...</a>
+                </div>
+            </div>
+    </div>
+{% endmacro %}
+
+
+
+{% macro my_event(event) %}
+<div class="col-lg-6 col-md-6 col-sm-12">
+    <div class="box">
+        <h5 class="titulo">{{event["titulo"]}}<a href="{{url_for('events_edit',id=event['id'])}}"><img src="{{url_for('static',filename='Imagenes/edit.png')}}" class="editar"></a></h5>
+        <p class="cont"><b>Fecha:</b> {{event["fecha"]}} <b>Lugar:</b> {{event["lugar"]}}</p>
+
+    </div>
+</div>
+{% endmacro %}
+
+{% macro event_admin(event) %}
+<div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="box">
+            <h5 class="titulo">{{event["titulo"]}}
+                <a href="{{url_for('events_edit',id=event['id'])}}"><img src="{{url_for('static',filename='Imagenes/refresh.png')}}" class="admin"></a>
+                <a href="#"><img src="{{url_for('static',filename='Imagenes/verified-text-paper.png')}}" class="admin"></a>
+                <a href="#"><img src="{{url_for('static',filename='Imagenes/delete-button.png')}}" class="admin"></a></h5>
+            <p class="cont"><b>Fecha:</b>{{event["fecha"]}} <b>Lugar:</b> {{event["lugar"]}}</p>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro comments(comment) %}
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <p class="comen1"><img src="{{url_for('static',filename='Imagenes/graduate.png')}}" align="left" class="imgcomen"><b>{{comment["nombre"]}}: </b>{{comment["comentario"]}} </p>
+    </div>
+</div>   
+{% endmacro %}

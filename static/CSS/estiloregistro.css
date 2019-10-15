@@ -1,0 +1,27 @@
+#jumbo-register {
+    border-radius: 25px;
+    margin-top: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.name {
+    position: relative;
+    left: 50px;
+}
+
+.lastname {
+    position: relative;
+    left: 80px;
+}
+
+.email {
+    position: relative;
+    left: 50px;
+}
+
+.user {
+    position: relative;
+    left: 50px;
+	top:15px;
+}

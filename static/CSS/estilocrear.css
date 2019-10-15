@@ -1,0 +1,259 @@
+.jumbotron{
+    margin-top: 25px;
+    border-radius: 50px;
+    background-color: rgba(243, 217, 246);
+}
+
+/*------------------------RESPONSIVE--------------------------*/
+/*Extra small devices (portrait phones, less than 576px)*/
+@media (max-width: 575.98px) {
+.boxtitulo{
+        border:0;
+        width: 400px;
+        border-radius: 15px;
+        background-color: rgba(243, 217, 246);
+    }
+    .input-comen{
+        width:400px;
+        height: 200px;
+        
+    }
+    .btn-ce {
+        background-color: rgba(185, 35, 245);
+        color: rgba(255, 255, 255);
+        position: relative;
+        left: 200px;
+    }
+    .imgcalen {
+        width: 50px;
+        margin: 10px;
+    }
+
+    .fecha {
+        font-size: 30px;
+    }
+
+    .imgcomen {
+        width: 70px;
+        margin: 10px;
+        position: relative;
+        bottom: 15px;
+    }
+    .boxfecha{
+        background-color: rgba(243, 217, 246);
+        border:0;
+    }
+    .boxlugar{
+        background-color: rgba(243, 217, 246);
+        border:0;
+    }
+    .jumbotron #segundo {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-radius: 30px;
+        background-color: rgba(255, 255, 255);
+    }
+
+
+
+
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .boxtitulo{
+        border:0;
+        border-radius: 15px;
+        background-color: rgba(243, 217, 246);
+    }
+    .input-comen{
+        width:500px;
+        height: 200px;
+        
+    }
+    .btn-ce {
+        background-color: rgba(185, 35, 245);
+        color: rgba(255, 255, 255);
+        position: relative;
+        left: 200px;
+    }
+    .imgcalen {
+        width: 50px;
+        margin: 10px;
+    }
+
+    .fecha {
+        font-size: 30px;
+    }
+
+    .imgcomen {
+        width: 70px;
+        margin: 10px;
+        position: relative;
+        bottom: 15px;
+    }
+    .boxfecha{
+        background-color: rgba(243, 217, 246);
+        border:0;
+    }
+    .boxlugar{
+        background-color: rgba(243, 217, 246);
+        border:0;
+    }
+    .jumbotron #segundo {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-radius: 30px;
+        background-color: rgba(255, 255, 255);
+    }
+
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .boxtitulo{
+        border:0;
+        border-radius: 15px;
+        background-color: rgba(243, 217, 246);
+    }
+    .input-comen{
+        width:650px;
+        
+    }
+    .btn-ce {
+        background-color: rgba(185, 35, 245);
+        color: rgba(255, 255, 255);
+        position: relative;
+        left: 200px;
+    }
+    .imgcalen {
+        width: 50px;
+        margin: 10px;
+    }
+
+    .fecha {
+        font-size: 30px;
+    }
+
+    .imgcomen {
+        width: 70px;
+        margin: 10px;
+        position: relative;
+        bottom: 15px;
+    }
+    .boxfecha{
+        background-color: rgba(243, 217, 246);
+        border:0;
+    }
+    .boxlugar{
+        background-color: rgba(243, 217, 246);
+        border:0;
+    }
+    .jumbotron #segundo {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-radius: 30px;
+        background-color: rgba(255, 255, 255);
+    }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .boxtitulo{
+        border:0;
+        border-radius: 15px;
+        background-color: rgba(243, 217, 246);
+    }
+    .input-comen{
+        width:500px;
+        height: 200px;
+        
+    }
+    .btn-ce {
+        background-color: rgba(185, 35, 245);
+        color: rgba(255, 255, 255);
+        position: relative;
+        left: 200px;
+    }
+    .imgcalen {
+        width: 50px;
+        margin: 10px;
+    }
+
+    .fecha {
+        font-size: 30px;
+    }
+
+    .imgcomen {
+        width: 70px;
+        margin: 10px;
+        position: relative;
+        bottom: 15px;
+    }
+    .boxfecha{
+        background-color: rgba(243, 217, 246);
+        border:0;
+    }
+    .boxlugar{
+        background-color: rgba(243, 217, 246);
+        border:0;
+        width: 275px;
+    }
+    .jumbotron #segundo {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-radius: 30px;
+        background-color: rgba(255, 255, 255);
+    }
+
+
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+    .boxtitulo{
+        border:0;
+        border-radius: 15px;
+        background-color: rgba(243, 217, 246);
+    }
+    .input-comen{
+        width:650px;
+        height: 200px;
+    }
+    .btn-ce {
+        background-color: rgba(185, 35, 245);
+        color: rgba(255, 255, 255);
+        position: relative;
+        left: 250px;
+    }
+    .imgcalen {
+        width: 50px;
+        margin: 10px;
+    }
+
+    .fecha {
+        font-size: 30px;
+    }
+
+    .imgcomen {
+        width: 70px;
+        margin: 10px;
+        position: relative;
+        bottom: 15px;
+    }
+    .boxfecha{
+        background-color: rgba(243, 217, 246);
+        border:0;
+    }
+    .boxlugar{
+        background-color: rgba(243, 217, 246);
+        border:0;
+    }
+    .jumbotron #segundo {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-radius: 30px;
+        background-color: rgba(255, 255, 255);
+    }
+
+}

@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+{% from "form_macros.html" import show_field ,show_radio_field, show_submit_field %}
+{% block contenido %}
+    <body background="{{ url_for('static', filename = 'Imagenes/background.jpg') }}">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-md-5 col-sm-5">
+            </div>
+            <div class="col-lg-4 col-md-7 col-sm-5">
+                <div class="jumbotron" id="jumbo-register">
+                    <form method="POST" action="{{ url_for('insert') }}" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <div class="form-row">
+                            <div class="col-lg-4 col-md-4 mb-3">
+                                {{ show_field(formRegister.nombre, class='form-control name') }}
+                            </div>
+                            <div class="col-lg-4 col-md-4 mb-3">
+                                {{ show_field(formRegister.apellido, class='form-control lastname' ) }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-8 col-md-8 mb-6">
+                                {{ show_field(formRegister.email, class='form-control email' ) }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                {{ show_field(formRegister.password, class='form-control') }}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                {{ show_field(formRegister.confirm, class='form-control') }}
+                            </div>
+                        </div>
+                        {{ show_submit_field(formRegister.submit , class='btn btn-success') }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

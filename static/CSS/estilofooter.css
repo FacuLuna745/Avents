@@ -1,0 +1,29 @@
+.footer-style {
+    padding-top: 20px;
+    background-color: rgba(29,22,30,0.8);
+}
+footer {
+  color: white;
+}
+footer h3 {
+  margin-bottom: 30px;
+    font-weight: 800;
+}
+footer .footer-above {
+  padding-top: 25px;
+  background-color: #2C3E50;
+}
+
+footer .footer-below {
+  padding: 25px 0;
+  background-color: #233140;
+}
+.imgfoo{
+    width: 25px;
+    height: 25px;
+    margin:5px;
+    color:white;
+}
+.columna{
+    background-color: black;
+}

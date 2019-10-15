@@ -1,0 +1,18 @@
+{% from "macro.html" import event_admin %}
+{% extends "index.html" %}
+{% block contenido %}
+   <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="jumbotron">
+                <h1 class="display-4" align="center">Mis Eventos</h1>
+                <div class="row">
+                    {% for event in listevent %}
+                        {{ event_admin(event) }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

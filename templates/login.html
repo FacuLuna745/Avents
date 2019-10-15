@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% from "form_macros.html" import show_field ,show_radio_field, show_submit_field %}
+{% block contenido %}
+    <body background="{{ url_for('static', filename = 'Imagenes/background.jpg') }}">
+    <div class="row">
+        <div class="col-lg-6 col-md-5 col-sm-5">
+            <div class="jumbotron">
+                <form method="POST" action="{{ url_for('loginuser') }}" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="form-row">
+                        <div class="col-lg-8 col-md-8 mb-6">
+                            {{ show_field(formLogin.emailLogin, class='form-control' , placeholder="Correo Electronico") }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class=" col-lg-4 col-md-3 mb-3">
+                            {{ show_field(formLogin.passwordLogin, class='form-control' , placeholder="Contraseña") }}
+                        </div>
+                    </div>
+                    {{ show_submit_field(formLogin.submitLogin , class='btn btn-success') }}
+                </form>
+            </div>
+
+        </div>
+{% endblock %}

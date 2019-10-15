@@ -1,0 +1,47 @@
+{% extends "index.html" %}
+{% from "form_macros.html" import show_field ,show_radio_field, show_submit_field %}
+{% block contenido %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="jumbotron">
+                    <form method="POST" action="{{ url_for('new_event') }}" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                {{ show_field(formCreate.nameEvent, class='form-control' ) }}
+                                <div class="form-group">
+                                    {{ show_field(formCreate.image, class='form-control-file' ) }}
+                                </div>
+                                {{ show_field(formCreate.description, class='form-control' ) }}
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                            {{ show_field(formCreate.dateEvent, class='form-control' ) }}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        {{ show_field(formCreate.place, class='form-control' ) }}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-5 col-sm-4">
+                                        <p class="fecha"><img src="{{ url_for('static',filename='Imagenes/speech-bubble.png') }}" class="imgcalen">
+                                            Comentarios
+                                        </p>
+                                    </div>
+                                </div>
+                                {{ show_submit_field(formCreate.update, class='btn btn-success') }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

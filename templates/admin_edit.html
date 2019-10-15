@@ -1,0 +1,51 @@
+{% from "macro.html" import comments %}
+{% extends "index.html" %}
+{% block contenido %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <h1 class="display-4">{{event["titulo"]}}<a href="#"><img src="{{url_for('static',filename='Imagenes/edit.png')}}" class="edit"></a></h1>
+                        <img src="{{url_for('static',filename='Imagenes/Event2.jpg')}}" alt="EVENT" class="img-event"><a href="#"><img src="{{url_for('static',filename='Imagenes/edit(1).png')}}" class="edit1"></a>
+                        <p class="lead">{{event["descripcion"]}} <a href="#"><img src="{{url_for('static',filename='Imagenes/edit.png')}}" class="edit"></a></p>
+                        <a class="btn btn-light btn-lg btn-ce" href="#" role="button">Guardar Evento</a>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="row">
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <p class="fecha"><img src="{{url_for('static',filename='Imagenes/calendario.png')}}" class="imgcalen"> Fecha: {{evento["fecha"]}}<a href="#"><img src="{{url_for('static',filename='Imagenes/edit.png')}}" class="edit"></a></p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <p class="fecha"><img src="{{url_for('static',filename='Imagenes/placeholder_A4_Rectangle_29_pattern.png')}}" class="imgcalen">Lugar: {{event["lugar"]}}<a href="#"><img src="{{url_for('static',filename='Imagenes/edit.png')}}" class="edit"></a></p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <p class="fecha"><img src="{{url_for('static',filename='Imagenes/speech-bubble.png')}}" class="imgcalen"> Comentarios<a href="#"><img src="{{url_for('static',filename='Imagenes/edit.png')}}" class="edit"></a></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="jumbotron" id="segundo">
+                                    {% for event in listcomment %}
+                                        {{ comments(event) }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
