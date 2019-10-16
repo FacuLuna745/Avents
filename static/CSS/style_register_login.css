@@ -1,0 +1,59 @@
+#jumbo-register{
+    border-radius: 25px;
+    margin-top: 100px;
+    margin-bottom:157px ;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: rgba(243, 217, 246, 0.9);
+
+}
+.btn-create {
+    position: relative;
+    left: 500px;
+    background-color: rgba(185, 35, 245);
+    color: rgba(255, 255, 255);
+    width: 150px;
+    border-radius: 15px;
+}
+.title-register{
+   position: relative;
+    left: 240px;
+    color:rgba(185, 35, 245);
+}
+.email{
+    margin-bottom: 10px;
+}
+.name{
+    margin-bottom: 10px;
+}
+.password{
+    margin-bottom: 10px;
+}
+/*-------------------------------------------LOGIN------------------------------------------------*/
+#jumbo-login{
+    border-radius: 25px;
+    margin-top: 100px;
+    margin-bottom:230px ;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: rgba(243, 217, 246, 0.9);
+}
+.btn-login {
+    position: relative;
+    left: 35px;
+    background-color: rgba(185, 35, 245);
+    color: rgba(255, 255, 255);
+    width: 150px;
+    border-radius: 15px;
+}
+.title-login{
+   position: relative;
+    left: 170px;
+    color:rgba(185, 35, 245);
+}
+.email-login{
+    margin-bottom: 10px;
+}
+.password-login{
+    margin-bottom: 10px;
+}

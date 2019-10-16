@@ -1,5 +1,5 @@
 {% from "macro.html" import show_event %}
-{% from "form_macros.html" import show_field ,show_radio_field, show_submit_field %}
+{% from "form_macros.html" import show_field ,show_radio_field, show_submit_field, show_field_filter %}
 {% extends "index.html" %}
 {% block contenido %}
 <!-------------------------------------------------------CONTENIDO---------------------------------------->
@@ -10,28 +10,28 @@
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-2  col-md-3 col-sm-12 p-0">
-                            {{ show_field(formFilter.nameEvent, class='form-control search-slt',placeholder=" Nombre de evento" ) }}
+                            {{ show_field_filter(formFilter.nameEvent, class='form-control search-slt',placeholder=" Nombre de evento" ) }}
                         </div>
                         <div class="col-lg-2 col-md-3 col-sm-12 p-0">
-                            {{ show_field(formFilter.place, class='form-control search-slt',placeholder=" Ubicacion"  ) }}
+                            {{ show_field_filter(formFilter.place, class='form-control search-slt',placeholder=" Ubicacion"  ) }}
                         </div>
                         <div class="col-lg-2 col-md-3 col-sm-12 p-0">
                             <div class="form-group">
-                                {{ show_field(formFilter.dateEventSince, class='form-control search-slt' ,placeholder=" Desde" ) }}
+                                {{ show_field_filter(formFilter.dateEventSince, class='form-control search-slt' ,placeholder=" Desde" ) }}
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-3 col-sm-12 p-0">
                             <div class="form-group">
-                                {{ show_field(formFilter.dateEventUntil, class='form-control search-slt',placeholder=" Hasta"  ) }}
+                                {{ show_field_filter(formFilter.dateEventUntil, class='form-control search-slt',placeholder=" Hasta"  ) }}
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-3 col-sm-12 p-0">
                             <div class="form-group">
-                                {{ show_field(formFilter.dateEventUntil, class='form-control search-slt',placeholder=" Hasta"  ) }}
+                                {{ show_field_filter(formFilter.dateEventUntil, class='form-control search-slt',placeholder=" Hasta"  ) }}
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-12 p-0">
-                            {{ show_field(formFilter.search, class=' btn btn-light wrn-btn' ) }}
+                            {{ show_field_filter(formFilter.search, class=' btn btn-light wrn-btn' ) }}
                         </div>
 
                     </div>

@@ -95,14 +95,13 @@ def loginuser():
     return render_template('cont_index.html', formLogin=formLogin)
 
 #------------------------------------------EVENTOS---------------------------------------------------
-@app.route('/event/<id>')
+@app.route('/event/<id>', methods=["POST","GET"])
 def event(id):
-    user = 'nolog'
-    title = "Avents-Events"
-    listevent = list_event()
-    listcomment = show_comment()
-    event = list(filter(lambda event: event['id'] == id, listevent))[0]
-    return render_template('cont_event.html', title=title, id=id, listcomment=listcomment, event=event, user=user)
+    event = show_event(id)
+    list_comment = show_comment(id)
+    title = "Evento"
+    user = "noLog"
+    return render_template('cont_event.html', title=title, event=event, list_comment=list_comment, user=user)
 
 
 @app.route('/create-event')

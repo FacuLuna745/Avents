@@ -16,6 +16,12 @@
 	{{show_error(campo)}}  <!-- Llamar a macro que muestra el error -->
 {% endmacro %}
 
+{% macro show_field_filter(campo) %}
+	{{ campo(**kwargs)|safe }} <!-- Mostrar campo -->
+	{{show_error(campo)}}  <!-- Llamar a macro que muestra el error -->
+{% endmacro %}
+
+
 <!-- Macro que se encarga de mostrar los campos tipo radio del formulario -->
 {% macro show_radio_field(campo) %}
 	{{ campo.label }} <!-- Mostrar etiqueta -->

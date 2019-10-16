@@ -21,7 +21,7 @@ class Register(FlaskForm):
             raise validators.ValidationError("El nombre de usuario solo puede contener letras, números y .")
 
     # Definición de campo String
-    nombre = StringField('caca',
+    nombre = StringField('Nombre',
                          [
                              # Definición de validaciones
                              validators.Required(message="Completar nombre")
@@ -48,7 +48,7 @@ class Register(FlaskForm):
                            validators.Email(message='Formato de mail incorrecto')
                        ])
     # Definición de campo submit
-    submit = SubmitField("Enviar")
+    submitRegister = SubmitField("Crear")
 
     # Clase de Login
 
@@ -67,6 +67,9 @@ class Login(FlaskForm):
                             ])
     # Definición de campo submit
     submitLogin = SubmitField("Iniciar")
+
+
+
 
 
 class CreateEvent(FlaskForm):
