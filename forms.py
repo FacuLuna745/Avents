@@ -79,10 +79,9 @@ class CreateEvent(FlaskForm):
         if (field.data.find("fuck") != -1) or (field.data.find("nigga") != -1):
             raise validators.ValidationError("El nombre del evento no puede contener malas palabras.")
 
-    def data_show(self):
-        print("Evento: " + str(self.nameEvent.data))
-        print("Fecha: " + str(self.dateEvent.data))
-        print("Descripcion: " + str(self.description.data))
+    def opcional(field):
+        field.validators.insert(0, validators.Optional())
+
 
     def date_range(self, field):  # Esta funcion no deja ingresar una fecha en el pasado
         if field.data < date.today():
@@ -101,6 +100,10 @@ class CreateEvent(FlaskForm):
                               validators.DataRequired(message="Ingrese la fecha de su evento"),
                               date_range
                           ])
+    timeEvent = TimeField('Hora',
+                     [
+                         validators.DataRequired(message="Ingrese una hora válida")
+                     ])
 
     place = StringField('Ubicacion',
                         [
@@ -118,6 +121,15 @@ class CreateEvent(FlaskForm):
                                     validators.length(min=40,
                                                       message='La descripcion del evento no puede ser tan corta.')
                                 ])
+
+    type_event = [
+        ('1', '--Ingrese tipo de evento--'),
+        ('2', 'Opción 1'),
+        ('3', 'Opción 2'),
+        ('4', 'Opción 3'),
+        ('5', 'Opción 4')
+    ]
+    options = SelectField('Opción', choices=type_event)
 
     submitEvent = SubmitField("Crear evento!")
     update = SubmitField("Actualizar")

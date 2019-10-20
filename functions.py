@@ -18,6 +18,9 @@ def delete_element_db(objeto):
 def show_event(id):
     return db.session.query(Event).get(id)
 
+def show_user(id):
+    return db.session.query(User).get(id)
+
 def show_comment(id):
     return db.session.query(Comment).filter(Comment.eventoId == id).all()
 

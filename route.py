@@ -97,11 +97,11 @@ def loginuser():
 #------------------------------------------EVENTOS---------------------------------------------------
 @app.route('/event/<id>', methods=["POST","GET"])
 def event(id):
-    event = show_event(id)
+    particular_event = show_event(id)
     list_comment = show_comment(id)
     title = "Evento"
     user = "noLog"
-    return render_template('cont_event.html', title=title, event=event, list_comment=list_comment, user=user)
+    return render_template('cont_event.html', title=title, particular_event=particular_event, list_comment=list_comment, user=user)
 
 
 @app.route('/create-event')
@@ -115,17 +115,27 @@ def create_event():
 @app.route('/new-event', methods=["POST", "GET"])
 def new_event():
     formCreate = CreateEvent()
+    user = show_user(297)
+    title = "Avents-CreateEvent"
     if formCreate.validate_on_submit():
         f = formCreate.image.data
         filename = secure_filename(formCreate.nameEvent.data + " imagen" + str(randint(1, 100)))
         f.save(os.path.join('static/Save', filename))
         flash('Evento creado con exito! (Debera ser aprobado por un administrador antes de '
               'ser mostrado en la pagina)', 'success')
-        formCreate.data_show()
+        event = Event(nombre=formCreate.nameEvent.data,
+                      fecha=formCreate.dateEvent.data,
+                      lugar=formCreate.place.data,
+                      descripcion=formCreate.description.data,
+                      tipo=formCreate.options.data,
+                      hora=formCreate.timeEvent.data,
+                      imagen=formCreate.image.data.filename,
+                      usuarioId=297)
+        insert_db(event)
         return redirect(url_for('new_event'))
     elif formCreate.is_submitted():
         flash('Error en la carga de datos', 'danger')  # Mostrar mensaje
-    return render_template('create_event.html', formCreate=formCreate)
+    return render_template('create_event.html', formCreate=formCreate, title=title, user=user, event=Event)
 
 
 @app.route('/update-event', methods=["POST", "GET"])
