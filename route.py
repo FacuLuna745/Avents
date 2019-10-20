@@ -56,10 +56,10 @@ def insert():
     formRegister = Register()  # Instanciar formRegister de registro
     if formRegister.validate_on_submit():  # Si el formRegister ha sido enviado y es validado correctamente
         flash('Usuario registrado exitosamente', 'success')  # Mostrar mensaje
-        users = User(nombre_usuario=formRegister.nombre.data,
-                     apellido_usuario=formRegister.apellido.data,
-                     email_usuario=formRegister.email.data,
-                     password_usuario=formRegister.password.data,
+        users = User(nombre=formRegister.nombre.data,
+                     apellido=formRegister.apellido.data,
+                     email=formRegister.email.data,
+                     password=formRegister.password.data,
                      admin=0)
         insert_db(users)
         return redirect(url_for('index'))  # Redirecciona a la página principal
