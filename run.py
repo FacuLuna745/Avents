@@ -1,6 +1,9 @@
 # -*-coding: utf-8 *-*
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy #Incluye sqlAlchemy
+from dotenv import load_dotenv
+load_dotenv()
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -8,6 +11,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:fl39131256@localhost/avent_bd'
 #Instancia que representa la base de datosapp
 db = SQLAlchemy(app)
+
+app.secret_key = 'topsecret'  # clave secreta
 
 #Instalar SQLAlchemy con:
 #pip install Flask-SQLAlchemy

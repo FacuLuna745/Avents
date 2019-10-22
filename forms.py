@@ -148,24 +148,21 @@ class Filter(FlaskForm):
 
         nameEvent = StringField('Nombre del evento',
                                 {
-                                    validators.DataRequired(message="Completar nombre"),
-                                    validators.length(min=3, max=10,
-                                                      message='El nombre del evento debe tener entre 3 y 10 caracteres'),
-                                    event_name
+                                    validators.optional(),
                                 })
 
         dateEventSince= DateField('Desde',
                               [
-                                  validators.DataRequired(message="Ingrese la fecha que desea buscar"),
+                                  validators.optional(),
                               ])
         dateEventUntil = DateField('Hasta',
                               [
-                                  validators.DataRequired(message="Ingrese la fecha que desea buscar"),
+                                  validators.optional(),
                               ])
 
         place = StringField('Ubicacion',
                             [
-                                validators.DataRequired(message="Completar Ubicacion")
+                                validators.optional()
                             ])
         typeEvent = [
             ('1', 'Tipo de Evento'),
@@ -176,12 +173,6 @@ class Filter(FlaskForm):
             ('Fiesta', 'Fiesta'),
         ]
         options = SelectField('Opción', choices=typeEvent)
-
-        timeEvent = TimeField('Hora',
-                              [
-                                  validators.DataRequired(message="Ingrese una hora válida")
-                              ])
-
 
         search=SubmitField("Buscar")
 class Comment (FlaskForm):

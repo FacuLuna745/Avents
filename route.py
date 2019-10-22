@@ -18,7 +18,7 @@ from models import *
 from sqlalchemy import or_
 
 csrf = CSRFProtect(app)  # Iniciar protección CSRF
-app.secret_key = 'topsecret'  # clave secreta
+
 
 
 # Función que muestra los datos obtenidos del envío de formulario
@@ -35,8 +35,25 @@ def index():
     user = 'noLog'
     formFilter = Filter()
     listevent = list_event()  # consultar eventos en bd
+    events = db.session.query(Event).filter(
+        Event.fecha >= db.session.query(Event).filter(Event.aprobado == True)).order_by(Event.fecha)  # consulta
+    if formFilter.validate_on_submit():
+        listevent = db.session.query(Event)
+        if formFilter.nameEvent.data is not None:
+            listevent = listevent.filter(Event.nombre.ilike("%"+formFilter.nameEvent.data +"%"))
+        if formFilter.place.data is not None:
+            listevent = listevent.filter(Event.lugar.ilike("%" + formFilter.place.data + "%"))
+        if formFilter.dateEventSince.data is not None:
+            listevent = listevent.filter(Event.fecha >= formFilter.dateEventSince.data)
+        if formFilter.dateEventUntil.data is not None:
+            listevent = listevent.filter(Event.fecha <= formFilter.dateEventUntil.data)
+        if formFilter.options.data != '1':
+            listevent = listevent.filter(Event.tipo == formFilter.options.data)
+
+        events = listevent.filter(Event.aprobado == True).order_by(Event.fecha)
+
     return render_template('cont_index.html', listevent=listevent, user=user, title=title, formFilter=formFilter,
-                           event=event)
+                           events=events)
 
 
 @app.route('/my-event')
@@ -143,7 +160,7 @@ def new_event():
 @app.route('/update-event/<eventId>', methods=["POST", "GET"])
 def update_event(eventId):
     title = "edit_event"
-    user="Log"
+    user = "Log"
     eventUpdate = show_event(eventId)
     log = show_user(297)
 
@@ -174,7 +191,8 @@ def update_event(eventId):
         return redirect(url_for('my_event'))
     elif formCreate.is_submitted():
         flash('Error en la carga de datos', 'danger')  # Mostrar mensaje
-    return render_template('event_edit.html', title=title, formCreate=formCreate, eventUpdate=eventUpdate, user=user, log=log)
+    return render_template('event_edit.html', title=title, formCreate=formCreate, eventUpdate=eventUpdate, user=user,
+                           log=log)
 
 
 @app.route('/delete-event/<eventId>', methods=["POST", "GET"])
@@ -183,6 +201,7 @@ def delete_event(eventId):
     event = show_event(eventId)
     delete_element_db(event)
     return redirect(url_for('my_event'))
+
 
 @app.route('/create-comment/<eventId>', methods=["POST", "GET"])
 def create_comment(eventId):
@@ -215,21 +234,24 @@ def events_admin():
     listevent = list_event()
     return render_template('cont_myevent.html', title=title, listevent=listevent, user=user)
 
+
 @app.route('/event-approve/<eventId>', methods=["POST", "GET"])
 def event_approve(eventId):
-    user="admin"
+    user = "admin"
     event = db.session.query(Event).get(eventId)
     event.aprobado = True
     update_db()
-    return redirect(url_for('events_admin', event=event,user=user))
+    return redirect(url_for('events_admin', event=event, user=user))
+
 
 @app.route('/event-disapprove/<eventId>', methods=["POST", "GET"])
 def event_disapprove(eventId):
-    user="admin"
+    user = "admin"
     event = db.session.query(Event).get(eventId)
     event.aprobado = False
     update_db()
-    return redirect(url_for('events_admin', event=event,user=user))
+    return redirect(url_for('events_admin', event=event, user=user))
+
 
 @app.route('/delete-event-admin/<eventId>', methods=["POST", "GET"])
 def delete_event_admin(eventId):
@@ -237,5 +259,6 @@ def delete_event_admin(eventId):
     event = show_event(eventId)
     delete_element_db(event)
     return redirect(url_for('events_admin'))
+
 
 app.run(debug=True)
