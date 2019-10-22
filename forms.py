@@ -20,6 +20,8 @@ class Register(FlaskForm):
             # Mostrar error de validación
             raise validators.ValidationError("El nombre de usuario solo puede contener letras, números y .")
 
+
+
     # Definición de campo String
     nombre = StringField('Nombre',
                          [
@@ -123,11 +125,12 @@ class CreateEvent(FlaskForm):
                                 ])
 
     type_event = [
-        ('1', '--Ingrese tipo de evento--'),
-        ('2', 'Opción 1'),
-        ('3', 'Opción 2'),
-        ('4', 'Opción 3'),
-        ('5', 'Opción 4')
+        ('1', '--Seleccione el tipo de evento--'),
+        ('Obra', 'Obra'),
+        ('Festival', 'Festival'),
+        ('Curso', 'Curso'),
+        ('Conferencia', 'Conferencia'),
+        ('Fiesta', 'Fiesta'),
     ]
     options = SelectField('Opción', choices=type_event)
 
@@ -164,6 +167,20 @@ class Filter(FlaskForm):
                             [
                                 validators.DataRequired(message="Completar Ubicacion")
                             ])
+        typeEvent = [
+            ('1', 'Tipo de Evento'),
+            ('Obra', 'Obra'),
+            ('Festival', 'Festival'),
+            ('Curso', 'Curso'),
+            ('Conferencia', 'Conferencia'),
+            ('Fiesta', 'Fiesta'),
+        ]
+        options = SelectField('Opción', choices=typeEvent)
+
+        timeEvent = TimeField('Hora',
+                              [
+                                  validators.DataRequired(message="Ingrese una hora válida")
+                              ])
 
 
         search=SubmitField("Buscar")
@@ -174,3 +191,4 @@ class Comment (FlaskForm):
                                    validators.length(min=4, max=350,
                                                      message='El nombre del evento debe tener entre 4 y 350 caracteres')
                                })
+    submit = SubmitField("Comentar")

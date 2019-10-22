@@ -1,7 +1,10 @@
-#-*-coding: utf-8 *-*
+# -*-coding: utf-8 *-*
 import datetime
 import os.path
 from random import randint
+
+from sqlalchemy.sql.functions import user
+
 from run import app, db
 from flask import Flask
 from flask import flash  # importar para mostrar mensajes flash
@@ -25,24 +28,27 @@ def show_data(formRegister):
     print(formRegister.password.data)
 
 
-#-----------------------INICIO------------------------------------------------------------------------
-@app.route('/',methods=["POST","GET"])
+# -----------------------INICIO------------------------------------------------------------------------
+@app.route('/', methods=["POST", "GET"])
 def index():
     title = "Avents"
-    user = 'nolog'
+    user = 'noLog'
     formFilter = Filter()
-    listevent = list_event()#consultar eventos en bd
-    return render_template('cont_index.html', listevent=listevent, user=user, title=title, formFilter=formFilter)
+    listevent = list_event()  # consultar eventos en bd
+    return render_template('cont_index.html', listevent=listevent, user=user, title=title, formFilter=formFilter,
+                           event=event)
 
 
 @app.route('/my-event')
 def my_event():
-    user = 'log'
+    user = "Log"
+    log = show_user(297)
     title = "Avents-MyEvent"
-    listevent = list_event()
-    return render_template('cont_myevent.html', title=title, listevent=listevent, user=user,id=id)
+    listevent = list_event_user(297)
+    return render_template('cont_myevent.html', title=title, listevent=listevent, user=user, log=log)
 
-#------------------------------------USUARIO-----------------------------------------------
+
+# ------------------------------------USUARIO-----------------------------------------------
 @app.route('/register')
 def register():
     user = 'nolog'
@@ -88,41 +94,37 @@ def loginuser():
             return redirect(url_for('index'))  # Redirecciona a la página principal}
         else:
             flash('Login incorrecto', 'danger')  # Mostrar mensaje de error
-            return redirect(url_for('index'))  # Redirecciona a la página principal
+            return redirect(url_for('login'))  # Redirecciona a la página principal
     else:
         flash('Formato del email incorrecto', 'danger')
         return redirect(url_for('index'))  # Redirecciona a la página principal
     return render_template('cont_index.html', formLogin=formLogin)
 
-#------------------------------------------EVENTOS---------------------------------------------------
-@app.route('/event/<id>', methods=["POST","GET"])
+
+# ------------------------------------------EVENTOS---------------------------------------------------
+@app.route('/event/<id>', methods=["POST", "GET"])
 def event(id):
+    user = "noLog"
     particular_event = show_event(id)
     list_comment = show_comment(id)
     title = "Evento"
-    user = "noLog"
-    return render_template('cont_event.html', title=title, particular_event=particular_event, list_comment=list_comment, user=user)
-
-
-@app.route('/create-event')
-def create_event():
-    formCreate = CreateEvent()
-    user = 'log'
-    title = "Avents-CreateEvent"
-    return render_template('create_event.html', title=title, user=user, formCreate=formCreate)
+    return render_template('cont_event.html', title=title, particular_event=particular_event, list_comment=list_comment,
+                           user=user)
 
 
 @app.route('/new-event', methods=["POST", "GET"])
 def new_event():
     formCreate = CreateEvent()
-    user = show_user(297)
+    user = "Log"
     title = "Avents-CreateEvent"
+    log = show_user(297)
     if formCreate.validate_on_submit():
         f = formCreate.image.data
         filename = secure_filename(formCreate.nameEvent.data + " imagen" + str(randint(1, 100)))
         f.save(os.path.join('static/Save', filename))
         flash('Evento creado con exito! (Debera ser aprobado por un administrador antes de '
               'ser mostrado en la pagina)', 'success')
+
         event = Event(nombre=formCreate.nameEvent.data,
                       fecha=formCreate.dateEvent.data,
                       lugar=formCreate.place.data,
@@ -132,48 +134,108 @@ def new_event():
                       imagen=formCreate.image.data.filename,
                       usuarioId=297)
         insert_db(event)
-        return redirect(url_for('new_event'))
+        return redirect(url_for('my_event'))
     elif formCreate.is_submitted():
         flash('Error en la carga de datos', 'danger')  # Mostrar mensaje
-    return render_template('create_event.html', formCreate=formCreate, title=title, user=user, event=Event)
+    return render_template('create_event.html', formCreate=formCreate, title=title, user=user, event=Event, log=log)
 
 
-@app.route('/update-event', methods=["POST", "GET"])
-def update_event():
+@app.route('/update-event/<eventId>', methods=["POST", "GET"])
+def update_event(eventId):
     title = "edit_event"
+    user="Log"
+    eventUpdate = show_event(eventId)
+    log = show_user(297)
 
     class Event:
-        nameEvent = "Evento 420"
-        dateEvent = datetime.datetime.strptime('2021-05-16', "%Y-%m-%d").date()
-        place = "En un lugar muy lejano"
-        imageEvent = "carrusel3.jpg"
-        description = "Esto es un evento random y estamos probando si podemos hacer el formulario de editar evento! " \
-                      "estaria muy cool si nos sale xd "
+        nameEvent = eventUpdate.nombre
+        dateEvent = eventUpdate.fecha
+        timeEvent = eventUpdate.hora
+        place = eventUpdate.lugar
+        image = eventUpdate.imagen
+        description = eventUpdate.descripcion
+        options = eventUpdate.tipo
 
     formCreate = CreateEvent(obj=Event)
+    CreateEvent.opcional(formCreate.image)
     if formCreate.validate_on_submit():
         flash('Evento actualizado con exito! (La actualizacion debera ser aprobada por un administrador antes'
               ' de ser mostrada en la pagina', 'success')
-        formCreate.mostrar_datos()
-        return redirect(url_for('update_event'))
-    return render_template('event_edit.html', title=title, formCreate=formCreate, event=event)
+
+        eventUpdate.nombre = formCreate.nameEvent.data,
+        eventUpdate.fecha = formCreate.dateEvent.data,
+        eventUpdate.hora = formCreate.timeEvent.data,
+        eventUpdate.lugar = formCreate.place.data,
+        eventUpdate.tipo = formCreate.options.data,
+        eventUpdate.descripcion = formCreate.description.data,
+        eventUpdate.aprobado = 0
+        update_db()
+
+        return redirect(url_for('my_event'))
+    elif formCreate.is_submitted():
+        flash('Error en la carga de datos', 'danger')  # Mostrar mensaje
+    return render_template('event_edit.html', title=title, formCreate=formCreate, eventUpdate=eventUpdate, user=user, log=log)
 
 
+@app.route('/delete-event/<eventId>', methods=["POST", "GET"])
+def delete_event(eventId):
+    user = "Log"
+    event = show_event(eventId)
+    delete_element_db(event)
+    return redirect(url_for('my_event'))
+
+@app.route('/create-comment/<eventId>', methods=["POST", "GET"])
+def create_comment(eventId):
+    default = db.func.current_timestamp()
+    formComment = Comment()
+    user = show_user(297)
+    event = show_event(eventId)
+    if formComment.validate_on_submit():
+        flash('Comentario publicado', 'success')  # Mostrar mensaje
+        comment = Comment(
+            contenido=formComment.commentEvent.data,
+            fechaHora=default,
+            eventoId=event.eventoId,
+            usuarioId=user.usuarioId
+        )
+        insert_db(comment)
+        return redirect(url_for('event'))  # Redirecciona a la página principal}
+    else:
+        flash('', 'danger')
+        return redirect(url_for('event'))  # Redirecciona a la página principal
+    return render_template('cont_event.html', title=title, particular_event=particular_event, list_comment=list_comment,
+                           user=user, event=event)
+
+
+# -----------------------------------------------ADMIN------------------------------------------------------------------
 @app.route('/events-admin')
 def events_admin():
-    user = 'admin'
-    title = "Avents-Events-Admin"
+    user = "admin"
+    title = "Avents-MyEvent"
     listevent = list_event()
-    return render_template('admin_event.html', title=title, id=id, event=event, user=user, listevent=listevent)
+    return render_template('cont_myevent.html', title=title, listevent=listevent, user=user)
 
+@app.route('/event-approve/<eventId>', methods=["POST", "GET"])
+def event_approve(eventId):
+    user="admin"
+    event = db.session.query(Event).get(eventId)
+    event.aprobado = True
+    update_db()
+    return redirect(url_for('events_admin', event=event,user=user))
 
-@app.route('/edit-admin/<id>')
-def edit_admin(id):
-    user = 'admin'
-    title = "Avents-Edit-Admin"
-    listevent = list_event()
-    event = list(filter(lambda event: event['id'] == id, listevent))[0]
-    return render_template('admin_Edit.html', title=title, id=id, event=event, user=user, listevent=listevent)
+@app.route('/event-disapprove/<eventId>', methods=["POST", "GET"])
+def event_disapprove(eventId):
+    user="admin"
+    event = db.session.query(Event).get(eventId)
+    event.aprobado = False
+    update_db()
+    return redirect(url_for('events_admin', event=event,user=user))
 
+@app.route('/delete-event-admin/<eventId>', methods=["POST", "GET"])
+def delete_event_admin(eventId):
+    user = "admin"
+    event = show_event(eventId)
+    delete_element_db(event)
+    return redirect(url_for('events_admin'))
 
 app.run(debug=True)

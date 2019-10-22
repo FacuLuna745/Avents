@@ -1,4 +1,4 @@
-{% from "macro.html" import show_event %}
+{% from "macro.html" import show_event, my_event ,events_admin%}
 {% from "form_macros.html" import show_field ,show_radio_field, show_submit_field, show_field_filter %}
 {% extends "index.html" %}
 {% block contenido %}
@@ -9,8 +9,13 @@
                 <h1 class="display-4" align="center">Mis Eventos</h1>
                 <div class="row">
                     {% for event in listevent %}
-                        {{ my_event(event) }}
+                        {% if user =="Log" %}
+                            {{ my_event(event) }}
+                        {% elif user=="admin" %}
+                            {{ events_admin(event) }}
+                        {% endif %}
                     {% endfor %}
+                <hr>
                 </div>
             </div>
         </div>

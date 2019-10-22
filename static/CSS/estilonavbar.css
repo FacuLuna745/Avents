@@ -503,14 +503,16 @@ li {
     height: 30px;
 }
 .img-user{
-        width: 50px;
+    width: 50px;
     height: 50px;
     border-radius: 100px;
+
 }
 .nomb-user{
-    color:rgba(255,255,255);
     position:relative;
     top:5px;
+    margin-right:20px;
+
 }
 
 a:hover {

@@ -22,7 +22,7 @@ class User(db.Model):
     nombre = db.Column(db.String(40), nullable=False)
     apellido = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(60), nullable=False)
-    password= db.Column(db.String(128), nullable=False)
+    password = db.Column(db.String(128), nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     event = db.relationship("Event", back_populates="user", cascade="all, delete-orphan")
     comment = db.relationship("Comment", back_populates="user", cascade="all, delete-orphan")

@@ -11,7 +11,7 @@
                         <img src="{{url_for('static',filename='Imagenes/Event2.jpg')}}" alt="EVENT" class="img-event">
                         <p class="lead">{{particular_event["descripcion"]}}</p>
                         {% if user=='log' %}
-                        <a class="btn btn-light btn-lg btn-ce" href="#" role="button">Comprar Entradas</a>
+                            <a class="btn btn-light btn-lg btn-ce" href="#" role="button">Comprar Entradas</a>
                         {% endif %}
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
@@ -28,10 +28,24 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <p class="fecha"><img src="{{url_for('static',filename='Imagenes/speech-bubble.png')}}" class="imgcalen"> Comentarios</p>
+                            <div class="form-group col-sm-6">
+                                <p class="fecha">Tipo: {{particular_event["tipo"]}}</p>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <p class="fecha">Hora: {{ particular_event["hora"] }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <p class="fecha"><img
+                                        src="{{ url_for('static',filename='Imagenes/speech-bubble.png') }}"
+                                        class="imgcalen"> Comentarios</p>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="jumbotron" id="segundo">

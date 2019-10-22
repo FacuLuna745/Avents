@@ -20,10 +20,9 @@
    
 }
 .editar{
-  width: 30px;
+    width: 30px;
     margin: 2px;
-    position: relative;
-    left: 50px;
+
 }
 
     .admin{
@@ -55,10 +54,9 @@
    
 }
 .editar{
-  width: 30px;
+     width: 30px;
     margin: 2px;
-    position: relative;
-    left: 50px;
+
 }
     .admin{
     width: 30px;
@@ -89,10 +87,9 @@
    
 }
 .editar{
-  width: 30px;
+    width: 30px;
     margin: 2px;
-    position: relative;
-    left: 50px;
+
 }
     .admin{
     width: 30px;
@@ -118,15 +115,12 @@
 
 .titulo{
     text-align: center;
-
     margin:0px;
    
 }
 .editar{
-  width: 30px;
+    width: 30px;
     margin: 2px;
-    position: relative;
-    left: 50px;
 }
     .admin{
     width: 30px;
@@ -156,10 +150,10 @@
    
 }
 .editar{
-  width: 30px;
+    width: 30px;
     margin: 2px;
-    position: relative;
-    left: 50px;
+
+
 }
     .admin{
     width: 30px;

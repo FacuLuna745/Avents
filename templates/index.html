@@ -39,9 +39,9 @@
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            {% if user=='log' %}
+            {% if user=='Log' %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('create_event') }}">Crear Evento</a>
+                    <a class="nav-link" href="{{ url_for('new_event') }}">Crear Evento</a>
                 </li>
 
                 <li class="nav-item">
@@ -51,7 +51,7 @@
         </ul>
 
 
-        {% if user=='nolog' %}
+        {% if user=='noLog' %}
 
             <a href="{{ url_for('register') }}" class="btn boton-regis" role="button"
                aria-pressed="true">Registrarse</a>
@@ -60,11 +60,12 @@
                 Sesión</a>
 
 
-        {% elif user=='log' %}
+        {% elif user=='Log' %}
             <li>
                 <img src="{{ url_for('static',filename='Imagenes/boy.png') }}" alt="users" class="img-user">
             </li>
-            <li class="nomb-user"><h6>Nombre de Usuario</h6></li>
+            <li class="nomb-user"><h6>{{ log.nombre }} {{ log.apellido }}</h6></li>
+             <button class="btn btn-cerrarSesion" type="submit">Cerrar Sesion</button>
 
         {% elif user=='admin' %}
             <li>

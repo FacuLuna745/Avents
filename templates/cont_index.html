@@ -2,7 +2,7 @@
 {% from "form_macros.html" import show_field ,show_radio_field, show_submit_field, show_field_filter %}
 {% extends "index.html" %}
 {% block contenido %}
-<!-------------------------------------------------------CONTENIDO---------------------------------------->
+<!-------------------------------------------------------FILTRO---------------------------------------->
     <div class="container">
         <form method="POST" action="{{ url_for('index') }}" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-lg-2 col-md-3 col-sm-12 p-0">
                             <div class="form-group">
-                                {{ show_field_filter(formFilter.dateEventUntil, class='form-control search-slt',placeholder=" Hasta"  ) }}
+                                {{ show_field_filter(formFilter.options, class='form-control search-slt', placeholder="Tipo de Evento") }}
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-12 p-0">
@@ -39,7 +39,7 @@
             </div>
         </form>
     </div>
-
+<!---------------------------------------------------CONTENIDO----------------------------------------------------------------->
 <div class="container-fluid">
     <div class="row">
         {% for event in listevent %}

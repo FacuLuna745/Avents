@@ -14,28 +14,87 @@
 
 
 {% macro my_event(event) %}
-<div class="col-lg-6 col-md-6 col-sm-12">
-    <div class="box">
-        <h5 class="titulo">{{event["titulo"]}}<a href="{{url_for('events_edit',id=event['id'])}}"><img src="{{url_for('static',filename='Imagenes/edit.png')}}" class="editar"></a></h5>
-        <p class="cont"><b>Fecha:</b> {{event["fecha"]}} <b>Lugar:</b> {{event["lugar"]}}</p>
+        <div class="col-6 col-md-3 border-caja">
+            <div class="text-center">
+                <p class="datosInicioUsuario">{{ event["nombre"] }}</p>
+            </div>
+        </div>
+        <div class="col-6 col-md-3 border-caja">
+            <div class="text-center">
+                <p class="datosInicioUsuario">{{ event["fecha"] }}</p>
+            </div>
+        </div>
 
-    </div>
-</div>
+        <div class="col-4 col-md-2 border-caja">
+            <div class="icons">
+                <a href="{{ url_for('update_event', eventId= event.eventoId) }}"><img
+                        src="{{ url_for('static',filename='Imagenes/refresh.png') }}" class="editar">
+                </a>
+            </div>
+        </div>
+        <div class="col-4 col-md-2 border-caja">
+            <div class="icons">
+                <a href="{{ url_for('delete_event', eventId = event.eventoId) }}"><img
+                        src="{{ url_for('static',filename='Imagenes/empty-tash-can.png') }}" class="editar">
+                    <span class="icon-cross iconStyle"></span>
+                    </button>
+                </a>
+            </div>
+        </div>
 {% endmacro %}
 
-{% macro event_admin(event) %}
-<div class="col-lg-6 col-md-6 col-sm-12">
-        <div class="box">
-            <h5 class="titulo">{{event["titulo"]}}
-                <a href="{{url_for('events_edit',id=event['id'])}}"><img src="{{url_for('static',filename='Imagenes/refresh.png')}}" class="admin"></a>
-                <a href="#"><img src="{{url_for('static',filename='Imagenes/verified-text-paper.png')}}" class="admin"></a>
-                <a href="#"><img src="{{url_for('static',filename='Imagenes/delete-button.png')}}" class="admin"></a></h5>
-            <p class="cont"><b>Fecha:</b>{{event["fecha"]}} <b>Lugar:</b> {{event["lugar"]}}</p>
+{% macro events_admin(event) %}
+    <div class="col-6 col-md-3 border-caja">
+        <div class="text-center">
+            <p class="datosInicioUsuario">{{ event["nombre"] }}</p>
         </div>
     </div>
+    <div class="col-6 col-md-3 border-caja">
+        <div class="text-center">
+            <p class="datosInicioUsuario">{{ event["fecha"] }}</p>
+        </div>
+    </div>
+
+    <div class="col-4 col-md-2 border-caja">
+        <div class="icons">
+            <a href="{{ url_for('update_event', eventId= event.eventoId) }}"><img
+                    src="{{ url_for('static',filename='Imagenes/refresh.png') }}" class="editar">
+            </a>
+        </div>
+    </div>
+    <div class="col-4 col-md-2 border-caja">
+        <div class="icons">
+            <a href="{{ url_for('delete_event_admin', eventId = event.eventoId) }}"><img
+                    src="{{ url_for('static',filename='Imagenes/empty-tash-can.png') }}" class="editar">
+                <span class="icon-cross iconStyle"></span>
+                </button>
+            </a>
+        </div>
+    </div>
+
+    {% if event.aprobado == false %}
+        <div class="col-4 col-md-2 border-caja">
+            <div class="icons">
+                <a href="{{ url_for('event_approve', eventId = event.eventoId) }}"><img
+                        src="{{ url_for('static',filename='Imagenes/approve.png') }}" class="editar">
+                    <span class="icon-cross iconStyle"></span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    {% elif event.aprobado== true %}
+        <div class="col-4 col-md-2 border-caja">
+            <div class="icons">
+                <a href="{{ url_for('event_disapprove', eventId = event.eventoId) }}"><img
+                        src="{{ url_for('static',filename='Imagenes/disapprove.png') }}" class="editar">
+                    <span class="icon-cross iconStyle"></span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    {% endif %}
+
 {% endmacro %}
-
-
 {% macro show_comment(comment) %}
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
