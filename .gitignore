@@ -8,4 +8,4 @@ pyvenv.cfg
 .env
 .idea/
 github.sh
-
+.env

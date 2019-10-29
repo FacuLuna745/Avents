@@ -1,12 +1,14 @@
 # - *- coding: utf- 8 - *-
+from run import db
 from datetime import date
-
+from models import User
 from flask_wtf import FlaskForm  # Importa funciones de formulario
 from wtforms import StringField, TextField, HiddenField, PasswordField, TextAreaField, SelectField, RadioField, \
     SubmitField  # Importa campos
 from wtforms.fields.html5 import EmailField, DateField  # Importa campos HTML
 from wtforms import validators  # Importa validaciones
 from wtforms_components import TimeField
+from wtforms.validators import ValidationError, Required, Email, EqualTo 
 from flask_wtf.file import FileField, FileRequired, FileAllowed  # Importa funciones, validaciones y campos de archivo
 
 
@@ -19,8 +21,6 @@ class Register(FlaskForm):
         if (field.data.find("_") != -1) or (field.data.find("#") != -1):
             # Mostrar error de validación
             raise validators.ValidationError("El nombre de usuario solo puede contener letras, números y .")
-
-
 
     # Definición de campo String
     nombre = StringField('Nombre',
@@ -52,7 +52,6 @@ class Register(FlaskForm):
     # Definición de campo submit
     submitRegister = SubmitField("Crear")
 
-    # Clase de Login
 
 
 class Login(FlaskForm):
@@ -84,7 +83,6 @@ class CreateEvent(FlaskForm):
     def opcional(field):
         field.validators.insert(0, validators.Optional())
 
-
     def date_range(self, field):  # Esta funcion no deja ingresar una fecha en el pasado
         if field.data < date.today():
             raise validators.ValidationError("Por favor, ingrese una fecha valida")
@@ -103,9 +101,9 @@ class CreateEvent(FlaskForm):
                               date_range
                           ])
     timeEvent = TimeField('Hora',
-                     [
-                         validators.DataRequired(message="Ingrese una hora válida")
-                     ])
+                          [
+                              validators.DataRequired(message="Ingrese una hora válida")
+                          ])
 
     place = StringField('Ubicacion',
                         [
@@ -137,49 +135,53 @@ class CreateEvent(FlaskForm):
     submitEvent = SubmitField("Crear evento!")
     update = SubmitField("Actualizar")
 
+
 class Filter(FlaskForm):
-        def event_name(self, field):
-            if (field.data.find("_") != -1) or (field.data.find("*") != -1):
-                raise validators.ValidationError(
-                    "Solo los siguientes caracteres especiales estan admitidos (! - # @ . ,)")
-            if (field.data.find("fuck") != -1) or (field.data.find("nigga") != -1):
-                raise validators.ValidationError("El nombre del evento no puede contener malas palabras.")
+    def event_name(self, field):
+        if (field.data.find("_") != -1) or (field.data.find("*") != -1):
+            raise validators.ValidationError(
+                "Solo los siguientes caracteres especiales estan admitidos (! - # @ . ,)")
+        if (field.data.find("fuck") != -1) or (field.data.find("nigga") != -1):
+            raise validators.ValidationError("El nombre del evento no puede contener malas palabras.")
+
+    nameEvent = StringField('Nombre del evento',
+                            {
+                                validators.optional(),
+                            })
+
+    dateEventSince = DateField('Desde',
+                               [
+                                   validators.optional(),
+                               ])
+    dateEventUntil = DateField('Hasta',
+                               [
+                                   validators.optional(),
+                               ])
+
+    place = StringField('Ubicacion',
+                        [
+                            validators.optional()
+                        ])
+    typeEvent = [
+        ('1', 'Tipo de Evento'),
+        ('Obra', 'Obra'),
+        ('Festival', 'Festival'),
+        ('Curso', 'Curso'),
+        ('Conferencia', 'Conferencia'),
+        ('Fiesta', 'Fiesta'),
+    ]
+    options = SelectField('Opción', choices=typeEvent)
+
+    search = SubmitField("Buscar")
 
 
-        nameEvent = StringField('Nombre del evento',
-                                {
-                                    validators.optional(),
-                                })
-
-        dateEventSince= DateField('Desde',
-                              [
-                                  validators.optional(),
-                              ])
-        dateEventUntil = DateField('Hasta',
-                              [
-                                  validators.optional(),
-                              ])
-
-        place = StringField('Ubicacion',
-                            [
-                                validators.optional()
-                            ])
-        typeEvent = [
-            ('1', 'Tipo de Evento'),
-            ('Obra', 'Obra'),
-            ('Festival', 'Festival'),
-            ('Curso', 'Curso'),
-            ('Conferencia', 'Conferencia'),
-            ('Fiesta', 'Fiesta'),
-        ]
-        options = SelectField('Opción', choices=typeEvent)
-
-        search=SubmitField("Buscar")
-class Comment (FlaskForm):
-    commentEvent=TextAreaField('Escriba un comentario',
-                               {
-                                   validators.DataRequired(message="No puede comentar en blanco"),
-                                   validators.length(min=4, max=350,
-                                                     message='El nombre del evento debe tener entre 4 y 350 caracteres')
-                               })
+class CreateComment(FlaskForm):
+    commentEvent = TextAreaField('Escriba un comentario',
+                                 {
+                                     validators.DataRequired(message="No puede comentar en blanco"),
+                                     validators.length(min=4, max=350,
+                                                       message='El nombre del evento debe tener entre 4 y 350 caracteres')
+                                 })
     submit = SubmitField("Comentar")
+
+

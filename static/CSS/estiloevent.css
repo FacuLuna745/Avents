@@ -1,6 +1,6 @@
 .jumbotron{
     margin-top: 25px;
-    border-radius: 50px;
+    border-radius: 25px;
     background-color: rgba(243, 217, 246);
     margin-top: 50px;
     margin-bottom: 121px;
@@ -272,13 +272,11 @@
         
     }
     .img-event {
-        width: 685px;
+        width: 550px;
         border-radius: 30px;
     }
 
     .jumbotron #segundo {
-        padding-top: 20px;
-        padding-bottom: 20px;
         border-radius: 30px;
         background-color: rgba(255, 255, 255);
     }

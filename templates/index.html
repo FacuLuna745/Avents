@@ -21,12 +21,8 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='CSS/estilosmiseve.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='CSS/style_register_login.css') }}">
 
-
 </head>
-
-
 <!--------------------------------------NAVBAR------------------------------------------------------------>
-
 <nav class="navbar navbar-expand-lg navbar-light " style="background-color: rgba(185,35,245)";  role="navigation">
     <a class="navbar-brand" href="{{ url_for('index') }}"><img
             src="{{ url_for('static',filename='Imagenes/vengadores.png') }}" class="logo" alt="logo"></a>
@@ -35,49 +31,42 @@
         <span> <img src="{{ url_for('static',filename='Imagenes/barramenu.png') }}" alt="barramenu"
                     class="barramenu"></span>
     </button>
-
-
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             {% if user=='Log' %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('new_event') }}">Crear Evento</a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('my_event') }}">Mis Eventos</a>
                 </li>
             {% endif %}
+        {% if user=='admin' %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('events_admin') }}">Eventos</a>
+                </li>
+            {% endif %}
         </ul>
-
-
         {% if user=='noLog' %}
-
             <a href="{{ url_for('register') }}" class="btn boton-regis" role="button"
                aria-pressed="true">Registrarse</a>
-
             <a href="{{ url_for('login') }}" class="btn boton-regis" role="button" aria-pressed="true">Iniciar
                 Sesión</a>
-
 
         {% elif user=='Log' %}
             <li>
                 <img src="{{ url_for('static',filename='Imagenes/boy.png') }}" alt="users" class="img-user">
             </li>
-            <li class="nomb-user"><h6>{{ log.nombre }} {{ log.apellido }}</h6></li>
+            <li class="nomb-user"><h6>{{ user.nombre }} {{ user.apellido }}</h6></li>
              <button class="btn btn-cerrarSesion" type="submit">Cerrar Sesion</button>
-
         {% elif user=='admin' %}
             <li>
                 <img src="{{ url_for('static',filename='Imagenes/boss.png') }}" alt="users" class="img-user">
             </li>
             <li class="nomb-user"><h6>Administrador</h6></li>
-
         {% endif %}
     </div>
 </nav>
-
-
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -136,7 +125,6 @@
                     <img src="{{ url_for('static',filename='Imagenes/supportpeque.png') }}" alt="support"
                          class="imgfoo">0800-5658-7896
                 </li>
-
                 <li>
                     <img src="{{ url_for('static',filename='Imagenes/email.png') }}" alt="mail" class="imgfoo">avents@gmail.com
                 </li>

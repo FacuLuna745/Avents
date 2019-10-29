@@ -1,4 +1,7 @@
-from run import db
+from run import db,app,login_manager
+from werkzeug.security import generate_password_hash, check_password_hash  #Permite gener y verificar la pass con hash
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask_login import UserMixin, LoginManager
 
 class Event(db.Model):
 
@@ -26,6 +29,56 @@ class User(db.Model):
     admin = db.Column(db.Boolean, nullable=False, default=False)
     event = db.relationship("Event", back_populates="user", cascade="all, delete-orphan")
     comment = db.relationship("Comment", back_populates="user", cascade="all, delete-orphan")
+
+    # No permitir leer la pass de un usuario
+    @property
+    def password(self):
+        raise AttributeError('La password no puede leerse')
+
+    # Al setear la pass generar un hash
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def get_id(self):
+        return (self.usuarioId)
+
+    # Al verififcar pass comparar hash del valor ingresado con el de la db
+    def verificar_pass(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    # Generar token de confirmación
+    def generar_token_confirmacion(self, expiracion=300):
+        # Crear una JSON Web Signatures a partir de la SECRET_KEY
+        # Colocar un tiempo de expiración de 3600 segundos
+        s = Serializer(app.config['SECRET_KEY'], expiracion)
+        # Convertir JWS en un Token string
+        return s.dumps({'confirm': self.usuarioId}).decode('utf-8')
+
+    # Al recibir el código de confirmación comparar con el generado
+    def confirmar(self, token):
+        # Crear una JSON Web Signatures a partir de la SECRET_KEY
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            # Intentar cargar a partir del token brindado por el usuario
+            data = s.loads(token.encode('utf-8'))
+        except:
+            return False
+        # Si el dato coincide con el id del usuario
+        if data.get('confirm') != self.usuarioId:
+            return False
+        # Setear el campo de confirmación del usuario a verdadero
+        self.confirmado = True
+        db.session.add(self)
+        db.session.commit()
+        return True
+
+    def __repr__(self):
+        return '<Usuario %r>' % self.email
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 class Comment(db.Model):
 

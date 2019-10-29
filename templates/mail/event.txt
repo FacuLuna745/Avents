@@ -1,0 +1,4 @@
+Evento
+
+Tu evento {{ event.nombre }} que se realizara el dia {{ event.fecha.strftime("%d %B, %Y") }} ha sido aprobado en
+y ya se encuentra a la vista en nuesta página!. Gracias por confiar en nosotros!!

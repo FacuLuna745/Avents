@@ -55,14 +55,14 @@
         </div>
     </div>
 
-    <div class="col-4 col-md-2 border-caja">
+    <div class="col-2 col-md-2 border-caja">
         <div class="icons">
             <a href="{{ url_for('update_event', eventId= event.eventoId) }}"><img
                     src="{{ url_for('static',filename='Imagenes/refresh.png') }}" class="editar">
             </a>
         </div>
     </div>
-    <div class="col-4 col-md-2 border-caja">
+    <div class="col-2 col-md-2 border-caja">
         <div class="icons">
             <a href="{{ url_for('delete_event_admin', eventId = event.eventoId) }}"><img
                     src="{{ url_for('static',filename='Imagenes/empty-tash-can.png') }}" class="editar">
@@ -72,21 +72,22 @@
         </div>
     </div>
 
-    {% if event.aprobado == false %}
+
+    {% if event.aprobado == True %}
         <div class="col-4 col-md-2 border-caja">
             <div class="icons">
-                <a href="{{ url_for('event_approve', eventId = event.eventoId) }}"><img
-                        src="{{ url_for('static',filename='Imagenes/approve.png') }}" class="editar">
+                <a href="{{ url_for('event_disapprove', eventId = event.eventoId) }}"><img
+                        src="{{ url_for('static',filename='Imagenes/approve.png') }}" data-toggle="tooltip" data-placement="top" title="Aprobado" class="editar">
                     <span class="icon-cross iconStyle"></span>
                     </button>
                 </a>
             </div>
         </div>
-    {% elif event.aprobado== true %}
+    {% elif event.aprobado== False %}
         <div class="col-4 col-md-2 border-caja">
             <div class="icons">
-                <a href="{{ url_for('event_disapprove', eventId = event.eventoId) }}"><img
-                        src="{{ url_for('static',filename='Imagenes/disapprove.png') }}" class="editar">
+                <a href="{{ url_for('event_approve', eventId = event.eventoId) }}"><img
+                        src="{{ url_for('static',filename='Imagenes/disapprove.png') }}" data-toggle="tooltip" data-placement="top" title="Desaprobado" class="editar">
                     <span class="icon-cross iconStyle"></span>
                     </button>
                 </a>
@@ -95,13 +96,21 @@
     {% endif %}
 
 {% endmacro %}
-{% macro show_comment(comment) %}
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        <p class="comen1">
-            <img src="{{url_for('static',filename='Imagenes/graduate.png')}}" align="left" class="imgcomen">
-            <b>{{comment.user.nombre}} {{ comment.user.apellido }}: </b>{{ comment.contenido }}
-        </p>
+{% macro show_comment(comment,user) %}
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <p class="comen1">
+                {% if user=="admin" %}
+                    <a href="{{ url_for('delete_comment_admin', eventId = comment["comentarioId"]) }}"><img
+                            src="{{ url_for('static',filename='Imagenes/empty-tash-can.png') }}" class="editar">
+                        <span class="icon-cross iconStyle"></span>
+                        </button>
+                    </a>
+                {% endif %}
+                <img src="{{ url_for('static',filename='Imagenes/graduate.png') }}" align="left" class="imgcomen">
+                <b>{{ comment.user.nombre }} {{ comment.user.apellido }}: </b>{{ comment.contenido }}
+            </p>
+        </div>
+        <hr>
     </div>
-</div>
 {% endmacro %}
