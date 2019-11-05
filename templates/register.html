@@ -1,14 +1,14 @@
 {% extends "index.html" %}
 {% from "form_macros.html" import show_field ,show_radio_field, show_submit_field %}
 {% block contenido %}
-    <body background="{{ url_for('static', filename = 'Imagenes/background.jpg') }}">
+    <body background="{{ url_for('static', filename = 'Imagenes/background.jpg') }}" style="background-repeat: no-repeat; background-size: cover; overflow-x: hidden; ">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
             </div>
             <div class="col-lg-5 col-md-5 col-sm-5">
                 <div class="jumbotron" id="jumbo-register">
-                    <form method="POST" action="{{ url_for('insert') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ url_for('register') }}" enctype="multipart/form-data">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <h1 class="title-register">Crear Cuenta</h1>
                         <hr />

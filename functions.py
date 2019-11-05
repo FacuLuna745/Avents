@@ -1,6 +1,13 @@
 from models import *
 from run import db
 
+def pending_event_list():
+    return db.session.query(Event).filter(Event.aprobado == 0)
+
+def pending_event_view(id):
+    events = pending_event_list()
+    return events.filter(Event.eventoId == id).first_or_404()
+
 def list_event():
     return db.session.query(Event).all()
 
@@ -17,6 +24,8 @@ def delete_element_db(objeto):
 
 def show_event(id):
     return db.session.query(Event).get(id)
+
+
 
 def show_user(id):
     return db.session.query(User).get(id)

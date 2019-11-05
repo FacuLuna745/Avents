@@ -1,4 +1,4 @@
-{% from "macro.html" import show_comment %}
+{% from "macro.html" import show_comment with context %}
 {% from "form_macros.html" import show_field ,show_radio_field, show_submit_field %}
 {% extends "index.html" %}
 {% block contenido %}
@@ -12,7 +12,7 @@
                             <img src="{{ url_for('static',filename='Imagenes/Event2.jpg') }}" alt="EVENT"
                                  class="img-event">
                             <p class="lead">{{ particular_event["descripcion"] }}</p>
-                            {% if user=='log' %}
+                            {% if current_user.is_authenticated %}
                                 <a class="btn btn-light btn-lg btn-ce" href="#" role="button">Comprar Entradas</a>
                             {% endif %}
                         </div>
@@ -36,14 +36,14 @@
                             <div class="row">
                                 <div class="form-group col-sm-6">
                                     <p class="fecha"><img
-                                        src="{{ url_for('static',filename='Imagenes/eventos.png') }}"
-                                        class="imgcalen">Tipo:{{ particular_event["tipo"] }}</p>
+                                            src="{{ url_for('static',filename='Imagenes/eventos.png') }}"
+                                            class="imgcalen">Tipo:{{ particular_event["tipo"] }}</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-6">
                                     <p class="fecha"><img src="{{ url_for('static',filename='Imagenes/clock.png') }}"
-                                    class="imgcalen">Hora:{{ particular_event["hora"] }}</p>
+                                                          class="imgcalen">Hora:{{ particular_event["hora"] }}</p>
                                 </div>
                             </div>
                         </div>
@@ -51,17 +51,16 @@
                         <div class="row">
                             <div class="col-lg-10 col-md-10 col-sm-10 offset-1 float-md-center">
                                 <div class="jumbotron" id="segundo">
-
                                     {% for particular_event in list_comment %}
-                                        {{ show_comment(particular_event,user) }}
+                                        {{ show_comment(particular_event) }}
                                     {% endfor %}
-                                    {% if user == "Log" %}
+                                    {% if current_user.is_authenticated %}
                                         <div class="comentarios">
                                         <div class="nombUsuario ingresarComentario">
                                             <p>Ingresar Comentario</p>
                                         </div>
                                         <form method="POST"
-                                              action="{{ url_for('event_user', eventId=particular_event.eventoId) }}">
+                                              action="{{ url_for('comment_user', eventId=particular_event.eventoId) }}">
                                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                             <div class="comentUsuario">
                                                 {{ show_field(formComment.commentEvent, class='form-control comentario', placeholder='Comente aquí!' ) }}
@@ -74,6 +73,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>

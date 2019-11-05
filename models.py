@@ -1,3 +1,5 @@
+from flask import url_for
+
 from run import db,app,login_manager
 from werkzeug.security import generate_password_hash, check_password_hash  #Permite gener y verificar la pass con hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -18,14 +20,56 @@ class Event(db.Model):
     hora = db.Column(db.Time, nullable=False)
     tipo = db.Column(db.String(15), nullable=False)
 
+    # Convertir Objeto a JSON
+    @property
+    def a_json(self):
+        evento_json = {
+            'eventoId': self.eventoId,
+            'nombre': self.nombre,
+            'fecha': str(self.fecha),
+            'hora': str(self.hora),
+            'lugar': self.lugar,
+            'tipo': self.tipo,
+            'descripcion': self.descripcion,
+            'imagen': self.imagen,
+            'aprobado': self.aprobado,
+            'usuarioId': self.usuarioId,
+        }
+        return evento_json
 
-class User(db.Model):
+    @staticmethod
+    # Convertir JSON a objeto
+    def desde_json(evento_json):
+        nombre = evento_json.get('nombre')
+        fecha = evento_json.get('fecha')
+        hora = evento_json.get('hora')
+        lugar = evento_json.get('lugar')
+        tipo= evento_json.get('tipo')
+        descripcion= evento_json.get('descripcion')
+        imagen= evento_json.get('imagen')
+        aprobado = evento_json.get('aprobado')
+        usuarioId = evento_json.get('usuarioId')
+        return Event(
+            nombre=nombre,
+            fecha=fecha,
+            hora=hora,
+            lugar_=lugar,
+            tipo=tipo,
+            descripcion=descripcion,
+            imagen=imagen,
+            aprobado=aprobado,
+            usuarioId=usuarioId,
+        )
+
+
+
+class User(UserMixin, db.Model):
 
     usuarioId = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(40), nullable=False)
     apellido = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(60), nullable=False)
-    password = db.Column(db.String(128), nullable=False)
+    password_hash= db.Column(db.String(128), nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     event = db.relationship("Event", back_populates="user", cascade="all, delete-orphan")
     comment = db.relationship("Comment", back_populates="user", cascade="all, delete-orphan")
@@ -55,24 +99,6 @@ class User(db.Model):
         # Convertir JWS en un Token string
         return s.dumps({'confirm': self.usuarioId}).decode('utf-8')
 
-    # Al recibir el código de confirmación comparar con el generado
-    def confirmar(self, token):
-        # Crear una JSON Web Signatures a partir de la SECRET_KEY
-        s = Serializer(app.config['SECRET_KEY'])
-        try:
-            # Intentar cargar a partir del token brindado por el usuario
-            data = s.loads(token.encode('utf-8'))
-        except:
-            return False
-        # Si el dato coincide con el id del usuario
-        if data.get('confirm') != self.usuarioId:
-            return False
-        # Setear el campo de confirmación del usuario a verdadero
-        self.confirmado = True
-        db.session.add(self)
-        db.session.commit()
-        return True
-
     def __repr__(self):
         return '<Usuario %r>' % self.email
 
@@ -80,8 +106,8 @@ class User(db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-class Comment(db.Model):
 
+class Comment(db.Model):
     comentarioId = db.Column(db.Integer, primary_key=True)
     contenido = db.Column(db.String(350), nullable=False)
     fechahora = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
@@ -90,6 +116,30 @@ class Comment(db.Model):
     event = db.relationship("Event", back_populates="comment")
     eventoId = db.Column(db.Integer, db.ForeignKey('event.eventoId'), nullable=False)
 
+    # Convertir Objeto a JSON
+    def a_json(self):
+        comentario_json = {
+            'comentarioId': url_for('apiGetPersonaById', id=self.eventoId, _external=True),
+            'contenido': self.contenido,
+            'fechahora': self.fechahora,
+            'eventoId': self.eventoId,
+            'usuarioId': self.usuarioId,
+        }
+        return comentario_json
+
+    @staticmethod
+    # Convertir JSON a objeto
+    def desde_json(comentario_json):
+        contenido = comentario_json.get('texto_comentario')
+        fechahora = comentario_json.get('fechaHora')
+        eventoId = comentario_json.get('eventoId')
+        usuarioId = comentario_json.get('usuarioId')
+        return Comment(
+            contenido=contenido,
+            fechahora=fechahora,
+            eventoId=eventoId,
+            usuarioId=usuarioId,
+        )
 
 #db.drop_all() #elimina las tablas
 #db.create_all() #crea las tablas en base a modelos
