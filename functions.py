@@ -26,7 +26,6 @@ def show_event(id):
     return db.session.query(Event).get(id)
 
 
-
 def show_user(id):
     return db.session.query(User).get(id)
 

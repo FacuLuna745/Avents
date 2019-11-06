@@ -21,10 +21,10 @@ class Event(db.Model):
     tipo = db.Column(db.String(15), nullable=False)
 
     # Convertir Objeto a JSON
-    @property
+
     def a_json(self):
-        evento_json = {
-            'eventoId': self.eventoId,
+        event_json = {
+        'eventoId': url_for('viewEventPending', eventId=self.eventoId, _external=True),
             'nombre': self.nombre,
             'fecha': str(self.fecha),
             'hora': str(self.hora),
@@ -35,20 +35,20 @@ class Event(db.Model):
             'aprobado': self.aprobado,
             'usuarioId': self.usuarioId,
         }
-        return evento_json
+        return event_json
 
     @staticmethod
     # Convertir JSON a objeto
-    def desde_json(evento_json):
-        nombre = evento_json.get('nombre')
-        fecha = evento_json.get('fecha')
-        hora = evento_json.get('hora')
-        lugar = evento_json.get('lugar')
-        tipo= evento_json.get('tipo')
-        descripcion= evento_json.get('descripcion')
-        imagen= evento_json.get('imagen')
-        aprobado = evento_json.get('aprobado')
-        usuarioId = evento_json.get('usuarioId')
+    def desde_json(event_json):
+        nombre = event_json.get('nombre')
+        fecha = event_json.get('fecha')
+        hora = event_json.get('hora')
+        lugar = event_json.get('lugar')
+        tipo= event_json.get('tipo')
+        descripcion= event_json.get('descripcion')
+        imagen= event_json.get('imagen')
+        aprobado = event_json.get('aprobado')
+        usuarioId = event_json.get('usuarioId')
         return Event(
             nombre=nombre,
             fecha=fecha,
@@ -119,10 +119,10 @@ class Comment(db.Model):
     # Convertir Objeto a JSON
     def a_json(self):
         comentario_json = {
-            'comentarioId': url_for('apiGetPersonaById', id=self.eventoId, _external=True),
+            'comentarioId': self.comentarioId,
             'contenido': self.contenido,
             'fechahora': self.fechahora,
-            'eventoId': self.eventoId,
+            'eventoId':url_for('viewEventPending', eventId=self.eventoId, _external=True),
             'usuarioId': self.usuarioId,
         }
         return comentario_json

@@ -1,5 +1,5 @@
 from flask import render_template,request, jsonify
-from run import run
+from run import app
 
 #Manejar error de página no encontrada
 @app.errorhandler(404)
