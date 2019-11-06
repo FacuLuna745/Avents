@@ -8,6 +8,12 @@ def pending_event_view(id):
     events = pending_event_list()
     return events.filter(Event.eventoId == id).first_or_404()
 
+def get_comment(id):
+    return db.session.query(Comment).get(id)
+
+def view_comment(id):
+    return db.session.query(Comment).filter(Comment.comentarioId == id)
+
 def list_event():
     return db.session.query(Event).all()
 
@@ -24,7 +30,6 @@ def delete_element_db(objeto):
 
 def show_event(id):
     return db.session.query(Event).get(id)
-
 
 def show_user(id):
     return db.session.query(User).get(id)
