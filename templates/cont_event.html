@@ -54,7 +54,7 @@
                                     {% for particular_event in list_comment %}
                                         {{ show_comment(particular_event) }}
                                     {% endfor %}
-                                    {% if current_user.is_authenticated %}
+                                    {% if current_user.is_authenticated and current_user.admin == False %}
                                         <div class="comentarios">
                                         <div class="nombUsuario ingresarComentario">
                                             <p>Ingresar Comentario</p>

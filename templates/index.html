@@ -33,15 +33,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            {% if current_user.is_authenticated %}
+            {% if current_user.is_authenticated and current_user.admin == False %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('new_event') }}">Crear Evento</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('my_event') }}">Mis Eventos</a>
                 </li>
-            {% endif %}
-            {% if current_user.is_authenticated.admin %}
+            {% elif current_user.is_authenticated and current_user.admin == True %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('events_admin') }}">Eventos</a>
                 </li>
@@ -52,7 +51,7 @@
                aria-pressed="true">Registrarse</a>
             <a href="{{ url_for('login') }}" class="btn boton-regis" role="button" aria-pressed="true">Iniciar
                 Sesión</a>
-        {% elif current_user.is_authenticated %}
+        {% elif current_user.is_authenticated and current_user.admin == False %}
             <li>
                 <img src="{{ url_for('static',filename='Imagenes/boy.png') }}" alt="users" class="img-user">
             </li>
@@ -60,12 +59,14 @@
             <a href="{{ url_for('logout') }}">
                 <button class="btn btn-cerrarSesion" type="button">Cerrar Sesion</button>
             </a>
-        {% endif %}
-        {% if  current_user.is_authenticated.admin == 1 %}
+        {% elif current_user.is_authenticated and current_user.admin == True %}
             <li>
                 <img src="{{ url_for('static',filename='Imagenes/boss.png') }}" alt="users" class="img-user">
             </li>
             <li class="nomb-user"><h6>Administrador</h6></li>
+            <a href="{{ url_for('logout') }}">
+                <button class="btn btn-cerrarSesion" type="button">Cerrar Sesion</button>
+            </a>
         {% endif %}
     </div>
 </nav>

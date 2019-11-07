@@ -39,12 +39,12 @@
             </div>
         </form>
     </div>
-<!---------------------------------------------------CONTENIDO----------------------------------------------------------------->
-<div class="container-fluid">
-    <div class="row">
-        {% for event in listevent %}
-            {{ show_event(event) }}
-        {% endfor %}
+    <!---------------------------------------------------CONTENIDO----------------------------------------------------------------->
+    <div class="container-fluid">
+        <div class="row">
+            {% for event in listevent %}
+                {{ show_event(event) }}
+            {% endfor %}
+        </div>
     </div>
-</div>
 {% endblock %}

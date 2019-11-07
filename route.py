@@ -32,8 +32,8 @@ def index():
     title = "Avents"
     formFilter = Filter()
     listevent = list_event()  # consultar eventos en bd
-    events = db.session.query(Event).filter(
-        Event.fecha >= db.session.query(Event).filter(Event.aprobado == True)).order_by(Event.fecha)  # consulta
+    events = db.session.query(Event).filter(Event.fecha >= db.session.query(Event).filter(Event.aprobado == True)) \
+        .order_by(Event.fecha)
     if formFilter.validate_on_submit():
         listevent = db.session.query(Event)
         if formFilter.nameEvent.data is not None:
@@ -101,7 +101,9 @@ def event(eventId):
     particular_event = show_event(eventId)
     formComment = CreateComment()
     list_comment = show_comment(eventId)
-    return render_template('cont_event.html', title=title, particular_event=particular_event, formComment=formComment,list_comment=list_comment)
+    return render_template('cont_event.html', title=title, particular_event=particular_event, formComment=formComment,
+                           list_comment=list_comment)
+
 
 # ----------------------------------USER------------------------------------------------------------------------
 
@@ -117,9 +119,7 @@ def my_event():
 @login_required
 def new_event():
     formCreate = CreateEvent()
-    user = "Log"
     title = "Avents-CreateEvent"
-    log = show_user(311)
     if formCreate.validate_on_submit():
         f = formCreate.image.data
         filename = secure_filename(formCreate.nameEvent.data + " imagen" + str(randint(1, 100)))
@@ -134,21 +134,19 @@ def new_event():
                       tipo=formCreate.options.data,
                       hora=formCreate.timeEvent.data,
                       imagen=formCreate.image.data.filename,
-                      usuarioId=311)
+                      usuarioId=current_user.usuarioId)
         insert_db(event)
         return redirect(url_for('my_event'))
     elif formCreate.is_submitted():
         flash('Error en la carga de datos', 'danger')  # Mostrar mensaje
-    return render_template('create_event.html', formCreate=formCreate, title=title, user=user, event=Event, log=log)
+    return render_template('create_event.html', formCreate=formCreate, title=title, event=Event)
 
 
 @app.route('/update-event/<eventId>', methods=["POST", "GET"])
 @login_required
 def update_event(eventId):
     title = "edit_event"
-    user = "Log"
     eventUpdate = show_event(eventId)
-    log = show_user(311)
 
     class Event:
         nameEvent = eventUpdate.nombre
@@ -177,8 +175,7 @@ def update_event(eventId):
         return redirect(url_for('my_event'))
     elif formCreate.is_submitted():
         flash('Error en la carga de datos', 'danger')  # Mostrar mensaje
-    return render_template('event_edit.html', title=title, formCreate=formCreate, eventUpdate=eventUpdate, user=user,
-                           log=log)
+    return render_template('event_edit.html', title=title, formCreate=formCreate, eventUpdate=eventUpdate)
 
 
 @app.route('/delete-event/<eventId>', methods=["POST", "GET"])
@@ -203,59 +200,55 @@ def comment_user(eventId):
     formComment = CreateComment()
     eventUser = show_event(eventId)
     if formComment.validate_on_submit():
-        flash("Comentario cargado con exito","success")
+        flash("Comentario cargado con exito", "success")
         comment = Comment(
             contenido=formComment.commentEvent.data,
             fechahora=default,
             eventoId=eventUser.eventoId,
-             usuarioId=current_user.usuarioId)
+            usuarioId=current_user.usuarioId)
         insert_db(comment)
-    return redirect(url_for('event', userId=current_user.usuarioId, eventId=eventUser.eventoId, formComment=formComment))
+    return redirect(
+        url_for('event', userId=current_user.usuarioId, eventId=eventUser.eventoId, formComment=formComment))
 
 
 # -----------------------------------------------ADMIN------------------------------------------------------------------
 
 @app.route('/list-events-admin')
 def events_admin():
-    user = "admin"
     title = "Avents-MyEvent"
+    formComment = CreateComment()
     listevent = list_event()
-    return render_template('cont_myevent.html', title=title, listevent=listevent, user=user)
+    return render_template('cont_myevent.html', title=title, listevent=listevent, formComment=formComment)
 
 
 @app.route('/view-admin/<eventId>', methods=["POST", "GET"])
 def view_admin(eventId):
-    user = "admin"
     particular_event = show_event(eventId)
     list_comment = show_comment(eventId)
     title = "Evento-Admin"
-    return render_template('cont_event.html', title=title, particular_event=particular_event, list_comment=list_comment,
-                           user=user)
+    return render_template('cont_event.html', title=title, particular_event=particular_event, list_comment=list_comment)
 
 
 @app.route('/event-approve/<eventId>', methods=["POST", "GET"])
 def event_approve(eventId):
-    user = "admin"
     event = db.session.query(Event).get(eventId)
     event.aprobado = True
     update_db()
     sendMail(event.user.email, 'Evento aprobado!', 'mail/event', event=event)
 
-    return redirect(url_for('events_admin', event=event, user=user))
+    return redirect(url_for('events_admin', event=event))
 
 
 @app.route('/event-disapprove/<eventId>', methods=["POST", "GET"])
 def event_disapprove(eventId):
-    user = "admin"
     event = db.session.query(Event).get(eventId)
     event.aprobado = False
     update_db()
-    return redirect(url_for('events_admin', event=event, user=user))
+    return redirect(url_for('events_admin', event=event))
 
 
 @app.route('/delete-event-admin/<eventId>', methods=["POST", "GET"])
 def delete_event_admin(eventId):
-    user = "admin"
     event = show_event(eventId)
     delete_element_db(event)
     return redirect(url_for('events_admin'))
