@@ -18,8 +18,6 @@ from flask_login import login_required, login_user, logout_user, current_user, L
 from sqlalchemy import or_
 from functionsMail import sendMail
 
-csrf = CSRFProtect(app)  # Iniciar protección CSRF
-
 
 # Función que sobreescribe el método al intentar ingresar a una ruta no autorizada
 @login_manager.unauthorized_handler
@@ -273,6 +271,3 @@ def delete_comment_admin(eventId):
     db.session.commit()
     flash('EL comentario ha sido borrado con Éxito', 'success')
     return redirect(url_for('view_admin', eventId=idEvent))
-
-
-app.run(debug=True)
