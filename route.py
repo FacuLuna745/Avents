@@ -1,21 +1,14 @@
 # -*-coding: utf-8 *-*
-import datetime
 import os.path
 from random import randint
-from sqlalchemy.sql.functions import user
-from run import app, db, mail
-from flask import request
-from flask import Flask
 from flask import flash  # importar para mostrar mensajes flash
 from flask import redirect, url_for  # importar para permitir redireccionar y generar url
 from flask import render_template
-from flask_wtf import CSRFProtect
 from werkzeug.utils import secure_filename
 from forms import *  # importar clase de formulario
 from functions import *
 from models import *
 from flask_login import login_required, login_user, logout_user, current_user, LoginManager
-from sqlalchemy import or_
 from functionsMail import sendMail
 
 
@@ -34,7 +27,7 @@ def index():
     listevent = list_event()  # consultar eventos en bd
     events = db.session.query(Event).filter(Event.fecha >= db.session.query(Event).filter(Event.aprobado == True)) \
         .order_by(Event.fecha)
-    if formFilter.validate_on_submit():
+    if formFilter.validate_on_submit(): #Filtro
         listevent = db.session.query(Event)
         if formFilter.nameEvent.data is not None:
             listevent = listevent.filter(Event.nombre.ilike("%" + formFilter.nameEvent.data + "%"))
@@ -54,7 +47,7 @@ def index():
 
 
 @app.route('/register', methods=["POST", "GET"])
-def register():
+def register():#Registrar un usuario
     user = 'nolog'
     title = "Avents-Register"
     formRegister = Register()  # Instanciar formRegister de registro
