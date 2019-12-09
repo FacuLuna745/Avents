@@ -42,9 +42,28 @@
     <!---------------------------------------------------CONTENIDO----------------------------------------------------------------->
     <div class="container-fluid">
         <div class="row">
-            {% for event in listevent %}
+            {% for event in listevent.items %}
                 {{ show_event(event) }}
             {% endfor %}
+        </div>
+    </div>
+ <!---------------------------------------------------PAGINACION----------------------------------------------------------------->
+    <div class="row">
+        <div class="col-md-12" style="text-align:center">
+            {% if listevent.hast_prev %}
+                <a href="{{ url_for('index', pag=listevent.prev_num) }}">Anterior</a>
+            {% endif %}
+            {% for i in range(1,(listevent.pages + 1)) %}
+                {% if listevent.page == i %}
+                    {{ i }}
+                {% else %}
+                    <a href="{{ url_for('index', pag=i) }}">{{ i }}</a>
+                {% endif %}
+            {% endfor %}
+            |
+            {% if listevent.has_next %}
+                <a href="{{ url_for('index', pag=listevent.next_num) }}">Siguiente</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

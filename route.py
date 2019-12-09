@@ -10,7 +10,7 @@ from functions import *
 from models import *
 from flask_login import login_required, login_user, logout_user, current_user, LoginManager
 from functionsMail import sendMail
-
+from run import db
 
 # Función que sobreescribe el método al intentar ingresar a una ruta no autorizada
 @login_manager.unauthorized_handler
@@ -21,12 +21,12 @@ def unauthorized_callback():
 
 
 @app.route('/', methods=["POST", "GET"])
-def index():
+@app.route('/<int:pag>', methods=["POST", "GET"])
+def index(pag=1):
+    pag_tam = 9
     title = "Avents"
     formFilter = Filter()
-    listevent = list_event()  # consultar eventos en bd
-    events = db.session.query(Event).filter(Event.fecha >= db.session.query(Event).filter(Event.aprobado == True)) \
-        .order_by(Event.fecha)
+    listevent = db.session.query(Event).filter(Event.fecha >= db.func.current_timestamp(), Event.aprobado == 1).order_by(Event.fecha).paginate(pag, pag_tam, error_out=False)
     if formFilter.validate_on_submit(): #Filtro
         listevent = db.session.query(Event)
         if formFilter.nameEvent.data is not None:
@@ -41,9 +41,9 @@ def index():
             listevent = listevent.filter(Event.tipo == formFilter.options.data)
 
         events = listevent.filter(Event.aprobado == True).order_by(Event.fecha)
-
-    return render_template('cont_index.html', listevent=listevent, title=title, formFilter=formFilter,
-                           events=events)
+        return render_template('filter.html', events=events, title=title, formFilter=formFilter)
+    else:
+        return render_template('cont_index.html', listevent=listevent, title=title, formFilter=formFilter)
 
 
 @app.route('/register', methods=["POST", "GET"])
