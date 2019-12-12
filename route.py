@@ -126,7 +126,7 @@ def new_event():
                       descripcion=formCreate.description.data,
                       tipo=formCreate.options.data,
                       hora=formCreate.timeEvent.data,
-                      imagen=formCreate.image.data.filename,
+                      imagen=filename,
                       usuarioId=current_user.usuarioId)
         insert_db(event)
         return redirect(url_for('my_event'))

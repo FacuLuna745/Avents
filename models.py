@@ -104,8 +104,10 @@ class User(UserMixin, db.Model):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
-
+    try:
+        return User.query.get(int(user_id))
+    except Exception:
+        pass
 
 class Comment(db.Model):
     comentarioId = db.Column(db.Integer, primary_key=True)
@@ -140,6 +142,8 @@ class Comment(db.Model):
             eventoId=eventoId,
             usuarioId=usuarioId,
         )
+
+
 
 #db.drop_all() #elimina las tablas
 #db.create_all() #crea las tablas en base a modelos

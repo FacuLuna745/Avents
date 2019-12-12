@@ -8,5 +8,5 @@ pyvenv.cfg
 .env
 .idea/
 github.sh
-.env
-error_mail_log
+error_logMail
+errors_log

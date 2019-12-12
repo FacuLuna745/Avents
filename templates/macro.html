@@ -1,45 +1,75 @@
-
 {% macro show_event(event) %}
     <div class=" col-lg-4 col-md-6 col-sm-6">
-            <div class="card">
-                <img src="{{ url_for('static',filename='Imagenes/Event1.jpg') }}" class="card-img" alt="event">
-                <div class="card-body">
-                    <h5 class="card-title">{{ event["nombre"] }}</h5>
-                    <p class="card-text">{{ event["descripcion"] }} </p>
-                    <a href="{{ url_for('event',eventId=event['eventoId']) }}" class="btn btn-link link-card">Ver más...</a>
-                </div>
+        <div class="card">
+            <img src="{{ url_for('static',filename='Imagenes/Event1.jpg') }}" class="card-img" alt="event">
+            <div class="card-body">
+                <h5 class="card-title">{{ event["nombre"] }}</h5>
+                <p class="card-text">{{ event["descripcion"] }} </p>
+                <a href="{{ url_for('event',eventId=event['eventoId']) }}" class="btn btn-link link-card">Ver más...</a>
             </div>
+        </div>
     </div>
 {% endmacro %}
 
 {% macro my_event(event) %}
-        <div class="col-6 col-md-3 border-caja">
-            <div class="text-center">
-                <p class="datosInicioUsuario">{{ event["nombre"] }}</p>
-            </div>
+    <div class="col-6 col-md-3 border-caja">
+        <div class="text-center">
+            <p class="datosInicioUsuario">{{ event["nombre"] }}</p>
         </div>
-        <div class="col-6 col-md-3 border-caja">
-            <div class="text-center">
-                <p class="datosInicioUsuario">{{ event["fecha"] }}</p>
-            </div>
+    </div>
+    <div class="col-6 col-md-3 border-caja">
+        <div class="text-center">
+            <p class="datosInicioUsuario">{{ event["fecha"] }}</p>
         </div>
+    </div>
 
-        <div class="col-4 col-md-2 border-caja">
-            <div class="icons">
-                <a href="{{ url_for('update_event', eventId= event.eventoId) }}"><img
-                        src="{{ url_for('static',filename='Imagenes/edit.png') }}" class="editar">
-                </a>
-            </div>
+    <div class="col-4 col-md-2 border-caja">
+        <div class="icons">
+            <a href="{{ url_for('update_event', eventId= event.eventoId) }}"><img
+                    src="{{ url_for('static',filename='Imagenes/edit.png') }}" class="editar">
+            </a>
         </div>
+    </div>
+    <div class="col-4 col-md-2 border-caja">
+        <div class="icons">
+            <a href="{{ url_for('delete_event', eventId = event.eventoId) }}"><img
+                    src="{{ url_for('static',filename='Imagenes/garbage.png') }}" class="editar">
+                <span class="icon-cross iconStyle"></span>
+                </button>
+            </a>
+        </div>
+    </div>
+
+    {% if event.aprobado == True %}
         <div class="col-4 col-md-2 border-caja">
             <div class="icons">
-                <a href="{{ url_for('delete_event', eventId = event.eventoId) }}"><img
-                        src="{{ url_for('static',filename='Imagenes/garbage.png') }}" class="editar">
+                <a><img
+                        src="{{ url_for('static',filename='Imagenes/checked(1).png') }}" data-toggle="tooltip"
+                        data-placement="top" title="Aprobado" class="editar">
                     <span class="icon-cross iconStyle"></span>
                     </button>
                 </a>
             </div>
         </div>
+    {% elif event.aprobado== False %}
+        <div class="col-4 col-md-2 border-caja">
+            <div class="icons">
+                <a><img
+                        src="{{ url_for('static',filename='Imagenes/cancel.png') }}" data-toggle="tooltip"
+                        data-placement="top" title="Desaprobado" class="editar">
+                    <span class="icon-cross iconStyle"></span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    {% endif %}
+
+
+
+
+
+
+
 {% endmacro %}
 
 {% macro events_admin(event) %}
@@ -76,7 +106,8 @@
         <div class="col-4 col-md-2 border-caja">
             <div class="icons">
                 <a href="{{ url_for('event_disapprove', eventId = event.eventoId) }}"><img
-                        src="{{ url_for('static',filename='Imagenes/checked(1).png') }}" data-toggle="tooltip" data-placement="top" title="Aprobado" class="editar">
+                        src="{{ url_for('static',filename='Imagenes/checked(1).png') }}" data-toggle="tooltip"
+                        data-placement="top" title="Aprobado" class="editar">
                     <span class="icon-cross iconStyle"></span>
                     </button>
                 </a>
@@ -86,7 +117,8 @@
         <div class="col-4 col-md-2 border-caja">
             <div class="icons">
                 <a href="{{ url_for('event_approve', eventId = event.eventoId) }}"><img
-                        src="{{ url_for('static',filename='Imagenes/cancel.png') }}" data-toggle="tooltip" data-placement="top" title="Desaprobado" class="editar">
+                        src="{{ url_for('static',filename='Imagenes/cancel.png') }}" data-toggle="tooltip"
+                        data-placement="top" title="Desaprobado" class="editar">
                     <span class="icon-cross iconStyle"></span>
                     </button>
                 </a>
