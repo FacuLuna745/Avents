@@ -1,5 +1,9 @@
+import os
+
+from functionsMail import sendMail
 from models import *
-from run import db
+from run import db, SQLAlchemyError
+
 
 def pending_event_list():
     return db.session.query(Event).filter(Event.aprobado == 0)
@@ -18,15 +22,27 @@ def list_event():
     return db.session.query(Event).all()
 
 def insert_db(objeto):
-    db.session.add(objeto)
-    db.session.commit()
+    try:
+        db.session.add(objeto)
+        db.session.commit()
+    except SQLAlchemyError as e:
+        db.rollback()
+        sendMail(os.getenv('ADMIN_MAIL'), 'Error en SQLAlchemy', 'mail/error', e=e)
 
 def update_db():
-    db.session.commit()
+    try:
+        db.session.commit()
+    except SQLAlchemyError as e:
+        db.rollback()
+        sendMail(os.getenv('ADMIN_MAIL'), 'Error en SQLAlchemy', 'mail/error', e=e)
 
 def delete_element_db(objeto):
-    db.session.delete(objeto)
-    db.session.commit()
+    try:
+        db.session.delete(objeto)
+        db.session.commit()
+    except SQLAlchemyError as e:
+        db.rollback()
+        sendMail(os.getenv('ADMIN_MAIL'), 'Error en SQLAlchemy', 'mail/error', e=e)
 
 def show_event(id):
     return db.session.query(Event).get(id)

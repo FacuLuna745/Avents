@@ -91,13 +91,12 @@ class User(UserMixin, db.Model):
     def verificar_pass(self, password):
         return check_password_hash(self.password_hash, password)
 
-    # Generar token de confirmación
-    def generar_token_confirmacion(self, expiracion=300):
-        # Crear una JSON Web Signatures a partir de la SECRET_KEY
-        # Colocar un tiempo de expiración de 3600 segundos
-        s = Serializer(app.config['SECRET_KEY'], expiracion)
-        # Convertir JWS en un Token string
-        return s.dumps({'confirm': self.usuarioId}).decode('utf-8')
+
+    def is_owner(self, event_or_coment):  # Verifica si el usuario es dueño del evento o comentario.
+        aux = False
+        if self.usuarioId == event_or_coment.usuarioId:
+            aux = True
+        return aux
 
     def __repr__(self):
         return '<Usuario %r>' % self.email
