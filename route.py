@@ -4,15 +4,14 @@ from random import randint
 from flask import flash  # importar para mostrar mensajes flash
 from flask import redirect, url_for  # importar para permitir redireccionar y generar url
 from flask import render_template
-from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.utils import secure_filename
 from forms import *  # importar clase de formulario
 from functions import *
 from models import *
 from flask_login import login_required, login_user, logout_user, current_user, LoginManager
 from functionsMail import sendMail
+from sqlalchemy.exc import SQLAlchemyError
 from run import db
-
 
 # Función que sobreescribe el método al intentar ingresar a una ruta no autorizada
 @login_manager.unauthorized_handler
@@ -72,7 +71,7 @@ def register():  # Registrar un usuario
             flash('Existe una cuenta registrada con el email ingresado', 'danger')
     elif formRegister.is_submitted():
         flash('Error en la carga de datos', 'danger')  # Mostrar mensaje
-    return render_template('register.html', formRegister=formRegister, user=user, title=title)
+    return render_template('register.html', formRegister=formRegister, title=title)
 
 
 @app.route('/login', methods=["GET", "POST"])
