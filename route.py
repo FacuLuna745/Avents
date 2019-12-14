@@ -1,7 +1,7 @@
 # -*-coding: utf-8 *-*
 import os.path
 from random import randint
-from flask import flash  # importar para mostrar mensajes flash
+from flask import flash, abort  # importar para mostrar mensajes flash
 from flask import redirect, url_for  # importar para permitir redireccionar y generar url
 from flask import render_template
 from werkzeug.utils import secure_filename
@@ -12,6 +12,7 @@ from flask_login import login_required, login_user, logout_user, current_user, L
 from functionsMail import sendMail
 from sqlalchemy.exc import SQLAlchemyError
 from run import db
+
 
 # Función que sobreescribe el método al intentar ingresar a una ruta no autorizada
 @login_manager.unauthorized_handler
@@ -144,7 +145,7 @@ def new_event():
 def update_event(eventId):
     title = "edit_event"
     eventUpdate = show_event(eventId)
-    if current_user.is_owner(eventUpdate):
+    if current_user.is_owner(eventUpdate) or current_user.admin:
         class Event:
             nameEvent = eventUpdate.nombre
             dateEvent = eventUpdate.fecha
@@ -177,6 +178,7 @@ def update_event(eventId):
         flash('Accion denegada, permisos insuficientes', 'warning')
         return redirect(url_for('index'))
 
+
 @app.route('/delete-event/<eventId>', methods=["POST", "GET"])
 @login_required
 def delete_event(eventId):
@@ -187,6 +189,7 @@ def delete_event(eventId):
     else:
         flash('Accion denegada, permisos insuficientes', 'warning')
         return redirect(url_for('index'))
+
 
 @app.route('/logout')
 @login_required
@@ -227,16 +230,6 @@ def events_admin():
         return redirect(url_for('index'))
 
 
-@app.route('/view-admin/<eventId>', methods=["POST", "GET"])
-def view_admin(eventId):
-    title = "Evento-Admin"
-    if current_user.admin:
-        particular_event = show_event(eventId)
-        list_comment = show_comment(eventId)
-        return render_template('cont_event.html', title=title, particular_event=particular_event, list_comment=list_comment)
-    else:
-        flash('Accion denegada, permisos insuficientes', 'danger')
-        return redirect(url_for('index'))
 
 @app.route('/event-approve/<eventId>', methods=["POST", "GET"])
 def event_approve(eventId):
@@ -250,6 +243,7 @@ def event_approve(eventId):
         flash('Accion denegada, permisos insuficientes', 'danger')
         return redirect(url_for('index'))
 
+
 @app.route('/event-disapprove/<eventId>', methods=["POST", "GET"])
 def event_disapprove(eventId):
     if current_user.admin:
@@ -260,6 +254,7 @@ def event_disapprove(eventId):
     else:
         flash('Accion denegada, permisos insuficientes', 'danger')
         return redirect(url_for('index'))
+
 
 @app.route('/delete-event-admin/<eventId>', methods=["POST", "GET"])
 def delete_event_admin(eventId):
@@ -273,20 +268,21 @@ def delete_event_admin(eventId):
 
 
 @app.route('/delete-comment-admin/<eventId>', methods=["POST", "GET"])
-def delete_comment_admin(eventId):
-    if current_user.admin:
-        comment = db.session.query(Comment).get(eventId) # Obtener comentario por id
-        idEvent = comment.eventoId
+def delete_comment(eventId):
+    comment = db.session.query(Comment).get(eventId)  # Obtener comentario por id
+    idEvent = comment.eventoId
+    if current_user.admin or current_user.is_owner(comment):
+        print(current_user.admin)
+        print(current_user.is_owner(comment))
         # Eliminar de la db
         try:
             db.session.delete(comment)
             db.session.commit()
-            flash('El comentario ha sido borrado con Éxito', 'success')
-            return redirect(url_for('view_admin', eventId=idEvent))
         except SQLAlchemyError as e:
             db.rollback()
             sendMail(os.getenv('ADMIN_MAIL'), 'Error en SQLAlchemy', 'mail/error', e=e)
+        flash('El comentario ha sido borrado con Éxito', 'success')
+        return redirect(url_for('event', eventId=idEvent))
     else:
         flash('Accion denegada, permisos insuficientes', 'danger')
         return redirect(url_for('index'))
-

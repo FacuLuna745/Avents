@@ -45,6 +45,6 @@ def sendMail(to, subject, template, **kwargs):
     # Crear configuración
     msg = confMsg(to, subject, template, **kwargs)
     # Crear hilo
-    thr = Thread(target=enviarMailAsync, args=[error.app, msg, subject, to])
+    thr = Thread(target=enviarMailAsync, args=[app, msg, subject, to])
     # Iniciar hilo
     thr.start()

@@ -1,5 +1,5 @@
 from flask import render_template, request, jsonify
-import functionsMail
+import functionsMail as mail
 from run import app, os
 import datetime
 
@@ -23,7 +23,7 @@ def page_not_found(e):
 def internal_server_error(e):
     print(e)
     viewFile_log(e)
-    functionsMail.sendMail(os.getenv('ADMIN_MAIL'), 'Error en SQLAlchemy', 'mail/error', e=e)
+    mail.sendMail(os.getenv('ADMIN_MAIL'), 'Error en SQLAlchemy', 'mail/error', e=e)
     # Si la solicitud acepta json y no HTML
     if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
         # Responder con JSON
