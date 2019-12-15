@@ -1,7 +1,7 @@
 # -*-coding: utf-8 *-*
 import os.path
 from random import randint
-from flask import flash  # importar para mostrar mensajes flash
+from flask import flash, abort  # importar para mostrar mensajes flash
 from flask import redirect, url_for  # importar para permitir redireccionar y generar url
 from flask import render_template
 from werkzeug.utils import secure_filename
@@ -21,10 +21,11 @@ def unauthorized_callback():
     return redirect(url_for('index'))
 
 
+#Ruta del Index
 @app.route('/', methods=["POST", "GET"])
-@app.route('/<int:pag>', methods=["POST", "GET"])
+@app.route('/<int:pag>', methods=["POST", "GET"]) #Se utiliza para paginacion
 def index(pag=1):
-    pag_tam = 9
+    pag_tam = 9 #Tamaño de pagina
     title = "Avents"
     formFilter = Filter()
     listevent = db.session.query(Event).filter(Event.fecha >= db.func.current_timestamp(),
@@ -53,6 +54,7 @@ def index(pag=1):
 @app.route('/register', methods=["POST", "GET"])
 def register():  # Registrar un usuario
     title = "Avents-Register"
+    abort(500)
     formRegister = Register()  # Instanciar formRegister de registro
     if formRegister.validate_on_submit():  # Si el formRegister ha sido enviado y es validado correctamente}
         auxQuerry = db.session.query(User).filter(User.email == formRegister.email.data)
@@ -104,7 +106,7 @@ def event(eventId):
 # ----------------------------------USER------------------------------------------------------------------------
 
 @app.route('/my-event')
-@login_required
+@login_required #Metodo de Flask Login del LoginManager que permite darle acceso restringido a ciertas vistas.
 def my_event():
     title = "Avents-MyEvent"
     listevent = list_event_user(current_user.usuarioId)
