@@ -117,7 +117,7 @@ def my_event():
 def new_event():
     formCreate = CreateEvent()
     title = "Avents -Create Event"
-    if formCreate.validate_on_submit():
+    if formCreate.validate_on_submit(): #devuelve verdad si el form es validado correctamente
         f = formCreate.image.data
         filename = secure_filename(formCreate.nameEvent.data + " imagen" + str(randint(1, 100)))
         f.save(os.path.join('static/Save', filename))

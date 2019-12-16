@@ -141,8 +141,3 @@ class Comment(db.Model):
             eventoId=eventoId,
             usuarioId=usuarioId,
         )
-
-
-
-#db.drop_all() #elimina las tablas
-#db.create_all() #crea las tablas en base a modelos
