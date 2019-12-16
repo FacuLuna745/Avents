@@ -13,10 +13,10 @@ def pending_event_view(id):
     return events.filter(Event.eventoId == id).first_or_404()
 
 def get_comment(id):
-    return db.session.query(Comment).get(id)
+    return db.session.query(Comment).get_or_404(id)
 
 def view_comment(id):
-    return db.session.query(Comment).filter(Comment.comentarioId == id)
+    return db.session.query(Comment).filter(Comment.comentarioId == id).first_or_404()
 
 def list_event():
     events=db.session.query(Event).filter(Event.fecha >= db.func.current_timestamp())
@@ -47,7 +47,7 @@ def delete_element_db(objeto):
         functionsMail.sendMail(os.getenv('ADMIN_MAIL'), 'Error en SQLAlchemy', 'mail/error', e=e)
 
 def show_event(id):
-    return db.session.query(Event).get(id)
+    return db.session.query(Event).get_or_404(id)
 
 def show_user(id):
     return db.session.query(User).get(id)

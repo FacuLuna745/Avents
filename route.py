@@ -218,6 +218,7 @@ def comment_user(eventId):
 # -----------------------------------------------ADMIN------------------------------------------------------------------
 
 @app.route('/list-events-admin')
+@login_required
 def events_admin():
     title = "Avents-Admin"
     if current_user.admin:
@@ -231,6 +232,7 @@ def events_admin():
 
 
 @app.route('/event-approve/<eventId>', methods=["POST", "GET"])
+@login_required
 def event_approve(eventId):
     if current_user.admin:
         event = db.session.query(Event).get(eventId)
@@ -244,6 +246,7 @@ def event_approve(eventId):
 
 
 @app.route('/event-disapprove/<eventId>', methods=["POST", "GET"])
+@login_required
 def event_disapprove(eventId):
     if current_user.admin:
         event = db.session.query(Event).get(eventId)
@@ -256,6 +259,7 @@ def event_disapprove(eventId):
 
 
 @app.route('/delete-event-admin/<eventId>', methods=["POST", "GET"])
+@login_required
 def delete_event_admin(eventId):
     if current_user.admin:
         event = show_event(eventId)
@@ -267,6 +271,7 @@ def delete_event_admin(eventId):
 
 
 @app.route('/delete-comment-admin/<eventId>', methods=["POST", "GET"])
+@login_required
 def delete_comment(eventId):
     comment = db.session.query(Comment).get(eventId)  # Obtener comentario por id
     idEvent = comment.eventoId

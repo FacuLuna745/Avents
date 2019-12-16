@@ -26,10 +26,11 @@
 .jumbotron #segundo {
     border-radius: 30px;
     background-color: rgba(255, 255, 255);
+    width: 95%;
 }
 
 .imgcalen {
-    width: 50px;
+    width: 45px;
     margin: 10px;
 }
 
@@ -42,13 +43,6 @@
     margin: 10px;
     position: relative;
     bottom: 15px;
-}
-
-.btn-ce {
-    background-color: rgba(185, 35, 245);
-    color: rgba(255, 255, 255);
-    position: relative;
-    left: 450px;
 }
 
 .inputcomen {
