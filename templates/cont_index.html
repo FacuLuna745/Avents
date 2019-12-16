@@ -39,6 +39,10 @@
             </div>
         </form>
     </div>
+    {% if paginar == True %}
+
+
+
     <!---------------------------------------------------CONTENIDO----------------------------------------------------------------->
     <div class="container-fluid">
         <div class="row">
@@ -69,4 +73,17 @@
             </div>
         </div>
     </div>
+
+     {% else %}
+        <div class="container-fluid">
+        <div class="row">
+            {% for event in listevent %}
+                {{ show_event(event) }}
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+     {% endif %}
 {% endblock %}

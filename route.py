@@ -25,6 +25,7 @@ def unauthorized_callback():
 @app.route('/', methods=["POST", "GET"])
 @app.route('/<int:pag>', methods=["POST", "GET"])
 def index(pag=1):
+    paginar = True
     pag_tam = 9
     title = "Avents"
     formFilter = Filter()
@@ -44,11 +45,10 @@ def index(pag=1):
         if formFilter.options.data != '1':
             listevent = listevent.filter(Event.tipo == formFilter.options.data)
 
-        events = listevent.filter(Event.aprobado == True).order_by(Event.fecha)
+        listevent = listevent.filter(Event.aprobado == True).order_by(Event.fecha)
+        paginar = False
 
-        return render_template('filter.html', events=events, title=title, formFilter=formFilter)
-    else:
-        return render_template('cont_index.html', listevent=listevent, title=title, formFilter=formFilter)
+    return render_template('cont_index.html', listevent=listevent, title=title, formFilter=formFilter,paginar=paginar)
 
 
 @app.route('/register', methods=["POST", "GET"])
@@ -94,8 +94,8 @@ def login():
 
 @app.route('/event/<eventId>', methods=["POST", "GET"])
 def event(eventId):
-    title = "Evento"
     particular_event = show_event(eventId)
+    title = "Event - " + particular_event.nombre
     formComment = CreateComment()
     list_comment = show_comment(eventId)
     return render_template('cont_event.html', title=title, particular_event=particular_event, formComment=formComment,
@@ -107,7 +107,7 @@ def event(eventId):
 @app.route('/my-event')
 @login_required
 def my_event():
-    title = "Avents-MyEvent"
+    title = "Avents -My Events"
     listevent = list_event_user(current_user.usuarioId)
     return render_template('cont_myevent.html', title=title, listevent=listevent)
 
@@ -116,7 +116,7 @@ def my_event():
 @login_required
 def new_event():
     formCreate = CreateEvent()
-    title = "Avents-CreateEvent"
+    title = "Avents -Create Event"
     if formCreate.validate_on_submit():
         f = formCreate.image.data
         filename = secure_filename(formCreate.nameEvent.data + " imagen" + str(randint(1, 100)))
@@ -142,7 +142,7 @@ def new_event():
 @app.route('/update-event/<eventId>', methods=["POST", "GET"])
 @login_required
 def update_event(eventId):
-    title = "edit_event"
+    title = "Avents -Edit Event"
     eventUpdate = show_event(eventId)
     if current_user.is_owner(eventUpdate) or current_user.admin:
         class Event:
