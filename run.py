@@ -33,5 +33,5 @@ if __name__ == '__main__': #Asegura que solo se ejectue el servidor cuando se ej
     from route_api import *
     from error import *
 
-    app.run(port=8000, debug=True)
+    app.run(port=8000)
     #app.run(host='IPv4',port = 8000)

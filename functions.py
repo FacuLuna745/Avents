@@ -50,7 +50,7 @@ def show_event(id):
     return db.session.query(Event).get_or_404(id)
 
 def show_user(id):
-    return db.session.query(User).get(id)
+    return db.session.query(User).get_or_404(id)
 
 def show_comment(id):
     return db.session.query(Comment).filter(Comment.eventoId == id).all()

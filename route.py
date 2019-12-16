@@ -11,7 +11,7 @@ from models import *
 from flask_login import login_required, login_user, logout_user, current_user, LoginManager
 from functionsMail import sendMail
 from sqlalchemy.exc import SQLAlchemyError
-from run import db
+from run import db,app
 
 
 # Función que sobreescribe el método al intentar ingresar a una ruta no autorizada
