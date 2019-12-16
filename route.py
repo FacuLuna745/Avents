@@ -84,7 +84,7 @@ def login():
 
         if user is not None and user.verificar_pass(formLogin.passwordLogin.data):
             login_user(user, True)
-            return redirect(url_for("index", userId=user.usuarioId))
+            return redirect(url_for("index"))
         else:
             flash('Email o pass incorrectas.', 'danger')
             return redirect(url_for('login'))

@@ -3,6 +3,7 @@ from run import app, db, csrf
 from models import *
 from flask import jsonify
 from functions import *
+from sqlalchemy.exc import SQLAlchemyError
 
 from functionsMail import sendMail
 
@@ -21,7 +22,7 @@ def viewEventPending(eventId):
 
 #Editar evento pendiente
 @app.route('/api/event/pending/edit/<eventId>', methods=["PUT"])
-@csrf.exempt
+@csrf.exempt #Desactivar token para poder editar
 def editPendingEvent(eventId):
     event= pending_event_view(eventId)
     event.nombre = request.json.get('nombre', event.nombre)
@@ -30,18 +31,25 @@ def editPendingEvent(eventId):
     event.lugar = request.json.get('lugar', event.lugar)
     event.tipo = request.json.get('tipo', event.tipo)
     event.descripcion = request.json.get('descripcion', event.descripcion)
-    db.session.add(event)
-    db.session.commit()
-    return jsonify(event.a_json()), 201
+    event.aprobado = 0
+    try:
+        db.session.add(event)
+        db.session.commit()
+        return jsonify(event.a_json()), 201
+    except SQLAlchemyError:
+        db.rollback()
 
 #Eliminar Evento Pendiente
 @app.route('/api/event/pending/delete/<eventId>', methods=["DELETE"])
 @csrf.exempt
 def deletePendingEvent(eventId):
     event = pending_event_view(eventId)
-    db.session.delete(event)
-    db.session.commit()
-    return '', 204
+    try:
+        db.session.delete(event)
+        db.session.commit()
+        return '', 204
+    except SQLAlchemyError:
+        db.rollback()
 
 #Aprobar evento
 @app.route('/api/event/approve/<eventId>', methods=["PUT"])
@@ -67,7 +75,7 @@ def listCommentEvent(eventId):
 @app.route('/api/comment/<commentId>', methods=["GET"])
 def showCommentEvent(commentId):
     comments = view_comment(commentId)
-    return jsonify({'comentario': [comment.a_json()for comment in comments]})
+    return jsonify({'comentario':comments.a_json()})
 
 
 #Eliminar Comentario
