@@ -1,7 +1,7 @@
 {% macro show_event(event) %}
     <div class=" col-lg-4 col-md-6 col-sm-6">
         <div class="card">
-            <img src="{{ url_for('static',filename='Imagenes/Event1.jpg') }}" class="card-img" alt="event">
+            <img src="{{ url_for('static',filename='Save/' + event.imagen) }}" class="card-img" alt="event">
             <div class="card-body">
                 <h5 class="card-title">{{ event["nombre"] }}</h5>
                 <p class="card-text">{{ event["descripcion"] }} </p>
@@ -131,15 +131,18 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <p class="comen1">
+
                 <img src="{{ url_for('static',filename='Imagenes/graduate.png') }}" align="left" class="imgcomen">
                 <b>{{ comment.user.nombre }} {{ comment.user.apellido }}: </b>{{ comment.contenido }}
-                {% if current_user.is_owner(comment) %}
+
+                {% if current_user.is_authenticated and current_user.is_owner(comment) %}
                     <a href="{{ url_for('delete_comment', eventId = comment["comentarioId"]) }}"><img
                             src="{{ url_for('static',filename='Imagenes/garbage.png') }}" class="editar">
                         <span class="icon-cross iconStyle"></span>
                         </button>
                     </a>
                 {% endif %}
+
                 {% if current_user.is_authenticated and current_user.admin == True %}
                     <a href="{{ url_for('delete_comment', eventId = comment["comentarioId"]) }}"><img
                             src="{{ url_for('static',filename='Imagenes/garbage.png') }}" class="editar">
@@ -147,6 +150,7 @@
                         </button>
                     </a>
                 {% endif %}
+
             </p>
         </div>
         <hr>

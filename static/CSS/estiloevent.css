@@ -1,4 +1,4 @@
-.jumbotron{
+.jumbotron {
     margin-top: 25px;
     border-radius: 25px;
     background-color: rgba(243, 217, 246);
@@ -6,318 +6,64 @@
     margin-bottom: 121px;
 }
 
-/*------------------------RESPONSIVE--------------------------*/
-/*Extra small devices (portrait phones, less than 576px)*/
-@media (max-width: 575.98px) {
-    .edit{
-        width:30px;
-    }
-    .edit1{
-        width: 40px;
-        position: relative;
-        top:-56px;
-        left:350px;
-        
-    }
-    .img-event {
-        width: 425px;
-        border-radius: 30px;
-    }
+.edit {
+    width: 30px;
+}
 
-    .jumbotron #segundo {
-        padding-top: 20px;
-        padding-bottom: 20px;
-        border-radius: 30px;
-        background-color: rgba(255, 255, 255);
-    }
-
-    .imgcalen {
-        width: 50px;
-        margin: 10px;
-    }
-
-    .fecha {
-        font-size: 20px;
-    }
-
-    .imgcomen {
-        width: 70px;
-        margin: 10px;
-        position: relative;
-        bottom: 15px;
-    }
-
-    .btn-ce {
-        background-color: rgba(185, 35, 245);
-        color: rgba(255, 255, 255);
-        position: relative;
-        left: 200px;
-    }
-
-    .inputcomen {
-        width: 280px;
-        height: 50px;
-    }
-
-    .btn-comen {
-        background-color: rgba(185, 35, 245);
-        color: rgba(255, 255, 255);
-        font-size: 15px;
-        position: relative;
-        left: 175px;
-        border-radius: 50px;
-        margin: 5px;
-    }
-
-
+.edit1 {
+    width: 40px;
+    position: relative;
+    top: -56px;
+    left: 600px;
 
 }
 
-/*Small devices (landscape phones, 576px and up)*/
-@media (min-width: 576px) and (max-width: 767.98px) {
-    .edit{
-        width:30px;
-    }
-    .edit1{
-        width: 40px;
-        position: relative;
-        top:85px;
-        left:-60px;
-        
-    }
-    .img-event {
-        width: 450px;
-        border-radius: 30px;
-    }
-
-    .jumbotron #segundo {
-        padding-top: 20px;
-        padding-bottom: 20px;
-        border-radius: 30px;
-        background-color: rgba(255, 255, 255);
-    }
-
-    .imgcalen {
-        width: 50px;
-        margin: 10px;
-    }
-
-    .fecha {
-        font-size: 30px;
-    }
-
-    .imgcomen {
-        width: 70px;
-        margin: 10px;
-        position: relative;
-        bottom: 15px;
-    }
-
-    .btn-ce {
-        background-color: rgba(185, 35, 245);
-        color: rgba(255, 255, 255);
-        position: relative;
-        left: 255px;
-    }
-
-    .inputcomen {
-        width: 475px;
-        height: 50px;
-    }
-
-    .btn-comen {
-        background-color: rgba(185, 35, 245);
-        color: rgba(255, 255, 255);
-        font-size: 15px;
-        position: relative;
-        left: 375px;
-        border-radius: 50px;
-        margin: 5px;
-    }
-
+.img-event {
+    width: 100%;
+    border-radius: 30px;
 }
 
-/*Medium devices (tablets, 768px and up)*/
-@media (min-width: 768px) and (max-width: 991.98px) {
-    .edit{
-        width:30px;
-    }
-    .edit1{
-        width: 40px;
-        position: relative;
-        top:-56px;
-        left:750px;
-        
-    }
-    .img-event {
-        width: 850px;
-        border-radius: 30px;
-    }
-
-    .jumbotron #segundo {
-        padding-top: 20px;
-        padding-bottom: 20px;
-        border-radius: 30px;
-        background-color: rgba(255, 255, 255);
-    }
-
-    .imgcalen {
-        width: 50px;
-        margin: 10px;
-    }
-
-    .fecha {
-        font-size: 30px;
-    }
-
-    .imgcomen {
-        width: 70px;
-        margin: 10px;
-        position: relative;
-        bottom: 15px;
-    }
-
-    .btn-ce {
-        background-color: rgba(185, 35, 245);
-        color: rgba(255, 255, 255);
-        position: relative;
-        left: 590px;
-    }
-
-    .inputcomen {
-        width: 670px;
-        height: 50px;
-    }
-
-    .btn-comen {
-        background-color: rgba(185, 35, 245);
-        color: rgba(255, 255, 255);
-        font-size: 15px;
-        position: relative;
-        left: 550px;
-        border-radius: 50px;
-        margin: 5px;
-    }
+.jumbotron #segundo {
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255);
 }
 
-/*Large devices (desktops, 992px and up)*/
-@media (min-width: 992px) and (max-width: 1199.98px) {
-    .edit{
-        width:30px;
-    }
-    .edit1{
-        width: 40px;
-        position: relative;
-        top:-56px;
-        left:450px;
-        
-    }
-    .img-event {
-        width: 500px;
-        border-radius: 30px;
-    }
-
-    .jumbotron #segundo {
-        padding-top: 20px;
-        padding-bottom: 20px;
-        border-radius: 30px;
-        background-color: rgba(255, 255, 255);
-    }
-
-    .imgcalen {
-        width: 50px;
-        margin: 10px;
-    }
-
-    .fecha {
-        font-size: 30px;
-    }
-
-    .imgcomen {
-        width: 70px;
-        margin: 10px;
-        position: relative;
-        bottom: 15px;
-    }
-
-    .btn-ce {
-        background-color: rgba(185, 35, 245);
-        color: rgba(255, 255, 255);
-        position: relative;
-        left: 200px;
-    }
-
-    .btn-comen {
-        background-color: rgba(185, 35, 245);
-        color: rgba(255, 255, 255);
-        font-size: 15px;
-        position: relative;
-        left: 250px;
-        border-radius: 50px;
-        margin: 5px;
-    }
-
+.imgcalen {
+    width: 50px;
+    margin: 10px;
 }
 
-/*Extra large devices (large desktops, 1200px and up)*/
-@media (min-width: 1200px) {
-    .edit{
-        width:30px;
-    }
-    .edit1{
-        width: 40px;
-        position: relative;
-        top:-56px;
-        left:600px;
-        
-    }
-    .img-event {
-        width: 550px;
-        border-radius: 30px;
-    }
-
-    .jumbotron #segundo {
-        border-radius: 30px;
-        background-color: rgba(255, 255, 255);
-    }
-
-    .imgcalen {
-        width: 50px;
-        margin: 10px;
-    }
-
-    .fecha {
-        font-size: 30px;
-    }
-
-    .imgcomen {
-        width: 70px;
-        margin: 10px;
-        position: relative;
-        bottom: 15px;
-    }
-
-    .btn-ce {
-        background-color: rgba(185, 35, 245);
-        color: rgba(255, 255, 255);
-        position: relative;
-        left: 450px;
-    }
-
-    .inputcomen {
-        width: 500px;
-        height: 50px;
-    }
-
-    .btn-comen {
-        background-color: rgba(185, 35, 245);
-        color: rgba(255, 255, 255);
-        font-size: 15px;
-        position: relative;
-        left: 400px;
-        border-radius: 50px;
-        margin: 5px;
-    }
-
-
+.fecha {
+    font-size: 30px;
 }
+
+.imgcomen {
+    width: 70px;
+    margin: 10px;
+    position: relative;
+    bottom: 15px;
+}
+
+.btn-ce {
+    background-color: rgba(185, 35, 245);
+    color: rgba(255, 255, 255);
+    position: relative;
+    left: 450px;
+}
+
+.inputcomen {
+    width: 500px;
+    height: 50px;
+}
+
+.btn-comen {
+    background-color: rgba(185, 35, 245);
+    color: rgba(255, 255, 255);
+    font-size: 15px;
+    position: relative;
+    left: 400px;
+    border-radius: 50px;
+    margin: 5px;
+}
+
+

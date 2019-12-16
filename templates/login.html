@@ -1,7 +1,21 @@
 {% extends "index.html" %}
 {% from "form_macros.html" import show_field ,show_radio_field, show_submit_field %}
 {% block contenido %}
-    <body background="{{ url_for('static', filename = 'Imagenes/background.jpg') }}">
+
+    <head>
+        <style>
+            body {
+                background-image: url(/static/Imagenes/background.jpg);
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+                background-color: rgba(255, 255, 255);
+            }
+        </style>
+    </head>
+
+    <body>
     <div class="row">
         <div class="col-lg-7 col-md-6 col-sm-6">
         </div>
@@ -10,7 +24,7 @@
                 <form method="POST" action="{{ url_for('login') }}" enctype="multipart/form-data">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <h1 class="title-login">Iniciar Sesion</h1>
-                    <hr />
+                    <hr/>
                     <div class="form-row">
                         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-8 offset-2 float-md-center">
                             {{ show_field(formLogin.emailLogin, class='form-control email-login',placeholder="example@gmail.com") }}
@@ -21,11 +35,13 @@
                             {{ show_field(formLogin.passwordLogin, class='form-control password-login') }}
                         </div>
                     </div>
-                    <hr />
+                    <hr/>
                     <a href="">Olvidaste la contraseña?</a>
                     {{ show_submit_field(formLogin.submitLogin , class='btn btn-login') }}
                 </form>
             </div>
 
         </div>
+    </div>
+    </body>
 {% endblock %}

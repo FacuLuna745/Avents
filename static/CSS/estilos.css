@@ -2,7 +2,7 @@
 .row{}
 .card {
     margin: 10px;
-    width: 550px;
+    width: 97%;
     padding: 15px;
     background-color: rgba(243, 217, 246);
     border-radius: 20px;
@@ -48,3 +48,11 @@
     border-radius:0;
     margin: 15px;
 }
+.link-card{
+    position: relative;
+    left:15px;
+}
+.null{
+    margin-top:40%;
+ }
+

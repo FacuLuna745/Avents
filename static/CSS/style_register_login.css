@@ -9,7 +9,7 @@
 }
 .btn-create {
     position: relative;
-    left: 500px;
+    left: 55%;
     background-color: rgba(185, 35, 245);
     color: rgba(255, 255, 255);
     width: 150px;
@@ -17,7 +17,7 @@
 }
 .title-register{
    position: relative;
-    left: 240px;
+    left:30%;
     color:rgba(185, 35, 245);
 }
 .email{
@@ -40,7 +40,7 @@
 }
 .btn-login {
     position: relative;
-    left: 35px;
+    left: 10%;
     background-color: rgba(185, 35, 245);
     color: rgba(255, 255, 255);
     width: 150px;
@@ -48,7 +48,7 @@
 }
 .title-login{
    position: relative;
-    left: 170px;
+    left: 28%;
     color:rgba(185, 35, 245);
 }
 .email-login{

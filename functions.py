@@ -19,7 +19,7 @@ def view_comment(id):
     return db.session.query(Comment).filter(Comment.comentarioId == id)
 
 def list_event():
-    events=db.session.query(Event)
+    events=db.session.query(Event).filter(Event.fecha >= db.func.current_timestamp())
     return events.order_by(Event.aprobado==1).all()
 
 def insert_db(objeto):

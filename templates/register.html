@@ -1,7 +1,21 @@
 {% extends "index.html" %}
 {% from "form_macros.html" import show_field ,show_radio_field, show_submit_field %}
 {% block contenido %}
-    <body background="{{ url_for('static', filename = 'Imagenes/background.jpg') }}" style="background-repeat: no-repeat; background-size: cover; overflow-x: hidden; ">
+
+    <head>
+        <style>
+            body {
+                background-image: url(/static/Imagenes/background.jpg);
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+                background-color: rgba(255, 255, 255);
+            }
+        </style>
+    </head>
+
+    <body>
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">

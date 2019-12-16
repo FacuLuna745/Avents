@@ -134,7 +134,6 @@ def new_event():
 
         insert_db(event)
         return redirect(url_for('my_event'))
-
     elif formCreate.is_submitted():
         flash('Error en la carga de datos', 'danger')  # Mostrar mensaje
     return render_template('create_event.html', formCreate=formCreate, title=title, event=Event)
@@ -220,7 +219,7 @@ def comment_user(eventId):
 
 @app.route('/list-events-admin')
 def events_admin():
-    title = "Avents-MyEvent"
+    title = "Avents-Admin"
     if current_user.admin:
         formComment = CreateComment()
         listevent = list_event()
