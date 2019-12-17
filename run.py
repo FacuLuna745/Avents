@@ -32,4 +32,5 @@ if __name__ == '__main__': #Asegura que solo se ejectue el servidor cuando se ej
     from error import *
 
     app.run(port=8000)
+
     #app.run(host='',port = 8000)

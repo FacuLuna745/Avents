@@ -5,7 +5,7 @@
                 <img src="{{ url_for('static',filename='Save/' + event.imagen) }}" class="card-img" alt="event">
                 <div class="card-body">
                     <h5 class="card-title">{{ event["nombre"] }}</h5>
-                    <p class="card-text">{{ event["descripcion"] }} </p>
+                    <p class="card-text description">{{ event["descripcion"] }} </p>
                     <a href="{{ url_for('event',eventId=event['eventoId']) }}" class="btn btn-link link-card">Ver
                         más...</a>
                 </div>

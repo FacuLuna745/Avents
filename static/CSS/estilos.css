@@ -6,7 +6,7 @@
     padding: 15px;
     background-color: rgba(243, 217, 246);
     border-radius: 20px;
-    height:600px;
+    height:100%;
 }
 
 .card-img {
@@ -17,6 +17,12 @@
     position: relative;
     left: 250px;
 
+}
+.description{
+      width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
 }
 
 
