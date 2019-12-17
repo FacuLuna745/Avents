@@ -1,11 +1,12 @@
 
 .row{}
-.card {
+.card{
     margin: 10px;
     width: 97%;
     padding: 15px;
     background-color: rgba(243, 217, 246);
     border-radius: 20px;
+    height:600px;
 }
 
 .card-img {
@@ -26,7 +27,7 @@
 }
 .search-slt{
     display: block;
-    width: 100%;
+    width: 95%;
     font-size: 0.875rem;
     line-height: 1.5;
     color: #55595c;
@@ -40,7 +41,7 @@
 .wrn-btn{
     background-color: rgba(185, 35, 245);
     color:rgba(255,255,255);
-    width: 100%;
+    width: 95%;
     font-size: 16px;
     font-weight: 400;
     text-transform: capitalize;
