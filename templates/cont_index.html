@@ -56,7 +56,7 @@
         <div class="col-md-12">
             <div class="center">
                 <div class="pagination">
-                    {% if listevent.hast_prev %}
+                    {% if listevent.has_prev %}
                         <a href="{{ url_for('index', pag=listevent.prev_num) }}">Anterior</a>
                     {% endif %}
                     {% for i in range(1,(listevent.pages + 1)) %}
