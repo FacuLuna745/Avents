@@ -61,9 +61,6 @@
                                     {% endfor %}
                                     {% if current_user.is_authenticated and current_user.admin == False %}
                                         <div class="comentarios">
-                                        <div class="nombUsuario ingresarComentario">
-                                            <p>Ingresar Comentario</p>
-                                        </div>
                                         <form method="POST"
                                               action="{{ url_for('comment_user', eventId=particular_event.eventoId) }}">
                                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>

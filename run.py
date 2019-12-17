@@ -4,8 +4,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy #Incluye sqlAlchemy
 from flask_login import LoginManager
 from flask_wtf import CSRFProtect #importar para proteccion CSRF
-from dotenv import load_dotenv
-load_dotenv()
 from flask_mail import Mail,Message
 from dotenv import load_dotenv
 load_dotenv()
@@ -34,4 +32,4 @@ if __name__ == '__main__': #Asegura que solo se ejectue el servidor cuando se ej
     from error import *
 
     app.run(port=8000)
-    #app.run(host='IPv4',port = 8000)
+    #app.run(host='',port = 8000)

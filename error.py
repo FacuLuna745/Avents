@@ -17,6 +17,16 @@ def page_not_found(e):
     # Sino responder con template HTML
     return render_template('error/404.html'), 404
 
+@app.errorhandler(405)
+def method_not_allowed(e):
+    print(e)
+    viewFile_log(e)
+    if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
+        response = jsonify({'error': 'not found'})
+        response.status_code = 405
+        return response
+    return render_template('error/404.html'), 405
+
 
 # Manejar error de error interno
 @app.errorhandler(500)

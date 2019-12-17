@@ -1,24 +1,28 @@
-{% from "macro.html" import show_event, my_event ,events_admin%}
+{% from "macro.html" import show_event, my_event ,events_admin %}
 {% from "form_macros.html" import show_field ,show_radio_field, show_submit_field, show_field_filter %}
 {% extends "index.html" %}
 {% block contenido %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="jumbotron">
-                <h1 class="display-4" align="center">Mis Eventos</h1>
-                <div class="row">
-                    {% for event in listevent %}
-                        {% if current_user.is_authenticated and current_user.admin == False %}
-                            {{ my_event(event) }}
-                        {% elif current_user.is_authenticated and current_user.admin == True %}
-                            {{ events_admin(event) }}
-                        {% endif %}
-                    {% endfor %}
-                <hr>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="jumbotron">
+                    {% if current_user.is_authenticated and current_user.admin == True %}
+                        <h1 class="display-4" align="center">Eventos</h1>
+                    {% else %}
+                        <h1 class="display-4" align="center">Mis Eventos</h1>
+                    {% endif %}
+                    <div class="row">
+                        {% for event in listevent %}
+                            {% if current_user.is_authenticated and current_user.admin == False %}
+                                {{ my_event(event) }}
+                            {% elif current_user.is_authenticated and current_user.admin == True %}
+                                {{ events_admin(event) }}
+                            {% endif %}
+                        {% endfor %}
+                        <hr>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

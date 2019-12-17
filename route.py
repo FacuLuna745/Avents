@@ -17,9 +17,9 @@ from run import db,app
 # Función que sobreescribe el método al intentar ingresar a una ruta no autorizada
 @login_manager.unauthorized_handler
 def unauthorized_callback():
-    flash('Debe iniciar sesión para continuar.', 'warning')
+    flash('Debe iniciar sesión para continuar.', 'danger')
     # Redireccionar a la página que contiene el formulario de login
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 
 @app.route('/', methods=["POST", "GET"])
@@ -89,7 +89,7 @@ def login():
             flash('Email o pass incorrectas.', 'danger')
             return redirect(url_for('login'))
 
-    return render_template('login.html', formLogin=formLogin)
+    return render_template('login.html', formLogin=formLogin,title=title)
 
 
 @app.route('/event/<eventId>', methods=["POST", "GET"])
@@ -157,38 +157,39 @@ def update_event(eventId):
         formCreate = CreateEvent(obj=Event)
         CreateEvent.opcional(formCreate.image)
         if formCreate.validate_on_submit():
-            flash('Evento actualizado con exito! (La actualizacion debera ser aprobada por un administrador antes'
-                  ' de ser mostrada en la pagina', 'success')
+            if current_user.admin == True:
+                flash('Evento actualizado correctamente','success')
 
-            eventUpdate.nombre = formCreate.nameEvent.data,
-            eventUpdate.fecha = formCreate.dateEvent.data,
-            eventUpdate.hora = formCreate.timeEvent.data,
-            eventUpdate.lugar = formCreate.place.data,
-            eventUpdate.tipo = formCreate.options.data,
-            eventUpdate.descripcion = formCreate.description.data,
-            eventUpdate.aprobado = 0
-            update_db()
+                eventUpdate.nombre = formCreate.nameEvent.data,
+                eventUpdate.fecha = formCreate.dateEvent.data,
+                eventUpdate.hora = formCreate.timeEvent.data,
+                eventUpdate.lugar = formCreate.place.data,
+                eventUpdate.tipo = formCreate.options.data,
+                eventUpdate.descripcion = formCreate.description.data,
+                eventUpdate.aprobado = 1
+                update_db()
 
-            return redirect(url_for('my_event'))
+                return redirect(url_for('events_admin'))
+            else:
+                flash('Evento actualizado con exito! Dicha actualizacion debe ser aprobada por el admin para'
+                      ' ser mostrada en la pagina', 'success')
+
+                eventUpdate.nombre = formCreate.nameEvent.data,
+                eventUpdate.fecha = formCreate.dateEvent.data,
+                eventUpdate.hora = formCreate.timeEvent.data,
+                eventUpdate.lugar = formCreate.place.data,
+                eventUpdate.tipo = formCreate.options.data,
+                eventUpdate.descripcion = formCreate.description.data,
+                eventUpdate.aprobado = 0
+                update_db()
+
+                return redirect(url_for('my_event'))
         elif formCreate.is_submitted():
             flash('Error en la carga de datos', 'danger')  # Mostrar mensaje
         return render_template('event_edit.html', title=title, formCreate=formCreate, eventUpdate=eventUpdate)
     else:
         flash('Accion denegada, permisos insuficientes', 'warning')
         return redirect(url_for('index'))
-
-
-@app.route('/delete-event/<eventId>', methods=["POST", "GET"])
-@login_required
-def delete_event(eventId):
-    event = show_event(eventId)
-    if current_user.is_owner(event):
-        delete_element_db(event)
-        return redirect(url_for('my_event'))
-    else:
-        flash('Accion denegada, permisos insuficientes', 'warning')
-        return redirect(url_for('index'))
-
 
 @app.route('/logout')
 @login_required
@@ -258,13 +259,16 @@ def event_disapprove(eventId):
         return redirect(url_for('index'))
 
 
-@app.route('/delete-event-admin/<eventId>', methods=["POST", "GET"])
+@app.route('/delete-event/<eventId>', methods=["POST", "GET"])
 @login_required
-def delete_event_admin(eventId):
-    if current_user.admin:
-        event = show_event(eventId)
+def delete_event(eventId):
+    event = show_event(eventId)
+    if current_user.admin or current_user.is_owner(event):
         delete_element_db(event)
-        return redirect(url_for('events_admin'))
+        if current_user.admin:
+            return redirect(url_for('events_admin'))
+        else:
+            return redirect(url_for('my_event'))
     else:
         flash('Accion denegada, permisos insuficientes', 'danger')
         return redirect(url_for('index'))
@@ -276,8 +280,6 @@ def delete_comment(eventId):
     comment = db.session.query(Comment).get(eventId)  # Obtener comentario por id
     idEvent = comment.eventoId
     if current_user.admin or current_user.is_owner(comment):
-        print(current_user.admin)
-        print(current_user.is_owner(comment))
         # Eliminar de la db
         try:
             db.session.delete(comment)

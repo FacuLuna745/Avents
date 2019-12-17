@@ -1,8 +1,6 @@
 from flask import url_for
-
 from run import db,app,login_manager
 from werkzeug.security import generate_password_hash, check_password_hash  #Permite gener y verificar la pass con hash
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_login import UserMixin, LoginManager
 
 class Event(db.Model):
@@ -141,3 +139,4 @@ class Comment(db.Model):
             eventoId=eventoId,
             usuarioId=usuarioId,
         )
+

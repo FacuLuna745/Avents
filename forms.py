@@ -26,12 +26,12 @@ class Register(FlaskForm):
     nombre = StringField('Nombre',
                          [
                              # Definición de validaciones
-                             validators.Required(message="Completar nombre")
+                             validators.DataRequired(message="Completar nombre")
                          ])
 
     apellido = StringField('Apellido',
                            [
-                               validators.Required(message="Completar apellido")
+                               validators.DataRequired(message="Completar apellido")
                            ])
 
     # Definición de campo de contraseña
@@ -46,7 +46,7 @@ class Register(FlaskForm):
     # Definición de campo de correo
     email = EmailField('Correo',
                        [
-                           validators.Required(message="Completar email"),
+                           validators.DataRequired(message="Completar email"),
                            validators.Email(message='Formato de mail incorrecto')
                        ])
     # Definición de campo submit
@@ -57,13 +57,13 @@ class Register(FlaskForm):
 class Login(FlaskForm):
     # Definición de campo de contraseña
     passwordLogin = PasswordField('Password', [
-        validators.Required(),
+        validators.DataRequired(),
     ])
 
     # Definición de campo de mail
     emailLogin = EmailField('E-mail',
                             [
-                                validators.Required(message="Completar email"),
+                                validators.DataRequired(message="Completar email"),
                                 validators.Email(message='Formato de mail incorrecto')
                             ])
     # Definición de campo submit
@@ -89,7 +89,7 @@ class CreateEvent(FlaskForm):
 
     nameEvent = StringField('Nombre del evento',
                             {
-                                validators.Required(message="Completar nombre"),
+                                validators.DataRequired(message="Completar nombre"),
                                 validators.length(min=5, max=70,
                                                   message='El nombre del evento debe tener entre 5 y 70 caracteres'),
                                 event_name
@@ -107,7 +107,7 @@ class CreateEvent(FlaskForm):
 
     place = StringField('Ubicacion',
                         [
-                            validators.Required(message="Completar Ubicacion")
+                            validators.DataRequired(message="Completar Ubicacion")
                         ])
 
     image = FileField(validators=[

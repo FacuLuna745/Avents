@@ -4,7 +4,6 @@ from models import *
 from flask import jsonify
 from functions import *
 from sqlalchemy.exc import SQLAlchemyError
-
 from functionsMail import sendMail
 
 
@@ -57,10 +56,13 @@ def deletePendingEvent(eventId):
 def approveEvent(eventId):
     event = pending_event_view(eventId)
     event.aprobado = True
-    db.session.add(event)
-    db.session.commit()
-    sendMail(event.user.email, 'Evento Aprobado!', 'mail/event', event=event)
-    return jsonify(event.a_json()), 201
+    try:
+        db.session.add(event)
+        db.session.commit()
+        sendMail(event.user.email, 'Evento Aprobado!', 'mail/event', event=event)
+        return jsonify(event.a_json()), 201
+    except SQLAlchemyError:
+        db.rollback()
 
 
 
@@ -83,6 +85,9 @@ def showCommentEvent(commentId):
 @csrf.exempt
 def deleteComment(commentId):
     comment = get_comment(commentId)
-    db.session.delete(comment)
-    db.session.commit()
-    return '', 204
+    try:
+        db.session.delete(comment)
+        db.session.commit()
+        return '', 204
+    except SQLAlchemyError:
+        db.rollback()

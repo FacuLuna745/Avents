@@ -1,12 +1,10 @@
-import datetime
 import smtplib
 from threading import Thread
-
 from run import mail, app, Message
 import error
 
 
-# Función que configura el mensaje
+#  # Configurar asunto, emisor y destinatarios
 def confMsg(to, subject, template, **kwargs):
     # Configurar asunto, emisor y destinatarios
     msg = Message(subject, sender=error.app.config['FLASKY_MAIL_SENDER'], recipients=[to])
